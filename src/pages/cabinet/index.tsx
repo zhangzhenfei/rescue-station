@@ -1,9 +1,9 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, Text } from '@tarojs/components'
+import { View, Text, Image } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 
-import './index.module.scss'
+const styles = require('./index.module.scss')
 
 type PageStateProps = {
   counterStore: {
@@ -46,31 +46,32 @@ class Index extends Component {
 
   componentDidHide() {}
 
-  increment = () => {
-    const { counterStore } = this.props
-    counterStore.increment()
-  }
-
-  decrement = () => {
-    const { counterStore } = this.props
-    counterStore.decrement()
-  }
-
-  incrementAsync = () => {
-    const { counterStore } = this.props
-    counterStore.incrementAsync()
-  }
-
   render() {
-    const {
-      counterStore: { counter }
-    } = this.props
     return (
-      <View className="index">
-        <Button onClick={this.increment}>+</Button>
-        <Button onClick={this.decrement}>-</Button>
-        <Button onClick={this.incrementAsync}>Add Async</Button>
-        <Text>{counter}</Text>
+      <View className="container">
+        <View className={styles.header}>
+          <View className={styles.headerTitle}>我的机柜</View>
+          <View className={styles.headerOrg}>
+            <Text>机构：</Text>
+            <Text className={styles.headerOrgBtn}>全部</Text>
+          </View>
+        </View>
+        <View className={styles.content}>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map(i => {
+            return (
+              <View className={styles.listItem} key={i}>
+                <Image mode="aspectFit" lazyLoad={true} className={styles.img} />
+                <View className={styles.listContent}>
+                  <View>
+                    <View className={styles.listTitle}>朝阳公园消防柜A</View>
+                    <View className={styles.listDesc}>AC132423</View>
+                  </View>
+                  <View className={styles.address}>北京朝阳区望京SOHO</View>
+                </View>
+              </View>
+            )
+          })}
+        </View>
       </View>
     )
   }
