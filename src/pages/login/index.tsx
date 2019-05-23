@@ -30,6 +30,10 @@ class Index extends Component {
 
   componentDidHide() {}
 
+  login() {
+    Taro.switchTab({ url: '/pages/index/index' })
+  }
+
   render() {
     return (
       <View className="container">
@@ -45,7 +49,7 @@ class Index extends Component {
             <AtForm className={styles.form}>
               <AtInput name="value" type="text" placeholder="请输入账号" />
               <AtInput name="value3" type="password" placeholder="请输入密码" />
-              <AtButton type="primary" formType="submit" className={styles.submit}>
+              <AtButton type="primary" formType="submit" className={styles.submit} onClick={this.login}>
                 登录
               </AtButton>
             </AtForm>
