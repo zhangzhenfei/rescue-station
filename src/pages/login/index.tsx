@@ -19,7 +19,6 @@ class Index extends Component {
   componentWillMount() {}
 
   componentWillReact() {
-    console.log('componentWillReact')
   }
 
   componentDidMount() {}
@@ -43,8 +42,8 @@ class Index extends Component {
             />
             <div className={styles.title}>智能应急综合救援站</div>
             <AtForm className={styles.form}>
-              <AtInput name="value" type="text" placeholder="请输入账号" />
-              <AtInput name="value3" type="password" placeholder="请输入密码" />
+              <AtInput name="account" type="text" placeholder="请输入账号" onChange={()=>{}} />
+              <AtInput name="password" type="password" placeholder="请输入密码" onChange={()=>{}} />
               <AtButton type="primary" formType="submit" className={styles.submit}>
                 登录
               </AtButton>
