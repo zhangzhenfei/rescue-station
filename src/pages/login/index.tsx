@@ -1,7 +1,7 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, ScrollView, Image } from '@tarojs/components'
-import { AtButton } from 'taro-ui'
+import { View, Image } from '@tarojs/components'
+import { AtForm, AtInput, AtButton } from 'taro-ui'
 
 const styles = require('./index.module.scss')
 
@@ -32,17 +32,26 @@ class Index extends Component {
 
   render() {
     return (
-      <ScrollView className="container" scrollY={true}>
-        <View className={styles.content}>
-          <Image
-            src={require('../../assets/img/common_ic_logo.png')}
-            mode="widthFix"
-            lazyLoad={true}
-            className={styles.logo}
-          />
-          <AtButton type="primary">登录</AtButton>
+      <View className="container">
+        <View className={styles.contentWrap}>
+          <View className={styles.content}>
+            <Image
+              src={require('../../assets/img/common_ic_logo.png')}
+              mode="widthFix"
+              lazyLoad={true}
+              className={styles.logo}
+            />
+            <div className={styles.title}>智能应急综合救援站</div>
+            <AtForm className={styles.form}>
+              <AtInput name="value" type="text" placeholder="请输入账号" />
+              <AtInput name="value3" type="password" placeholder="请输入密码" />
+              <AtButton type="primary" formType="submit" className={styles.submit}>
+                登录
+              </AtButton>
+            </AtForm>
+          </View>
         </View>
-      </ScrollView>
+      </View>
     )
   }
 }
