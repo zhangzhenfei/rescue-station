@@ -1,0 +1,51 @@
+@import './assets/scss/global.scss'; // global class
+
+page,
+view,
+text,
+form,
+input,
+button,
+scroll-view,
+navigator,
+swiper,
+picker,
+div {
+  box-sizing: border-box;
+}
+
+page {
+  font-size: $main-fontsize;
+  width: 100%;
+  height: 100%;
+  color: #666666;
+  overflow-x: hidden;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  overflow-x: hidden;
+}
+
+.primaryColor {
+  color: $primary-color;
+}
+
+.ellpisis {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellpisis;
+  white-space: nowrap;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+.absolute-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
