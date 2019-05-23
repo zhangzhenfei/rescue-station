@@ -18,9 +18,7 @@ class Index extends Component {
 
   componentWillMount() {}
 
-  componentWillReact() {
-    console.log('componentWillReact')
-  }
+  componentWillReact() {}
 
   componentDidMount() {}
 
@@ -49,7 +47,12 @@ class Index extends Component {
             <AtForm className={styles.form}>
               <AtInput name="value" type="text" placeholder="请输入账号" />
               <AtInput name="value3" type="password" placeholder="请输入密码" />
-              <AtButton type="primary" formType="submit" className={styles.submit} onClick={this.login}>
+              <AtButton
+                type="primary"
+                formType="submit"
+                className={styles.submit}
+                onClick={this.login}
+              >
                 登录
               </AtButton>
             </AtForm>
