@@ -1,3 +1,5 @@
+const path = require('path')
+
 const config = {
   projectName: 'rescue-station',
   date: '2019-5-23',
@@ -21,6 +23,10 @@ const config = {
         ]
       ],
       plugins: ['transform-decorators-legacy', 'transform-class-properties', 'transform-object-rest-spread']
+    },
+    sass: {
+      resource: path.resolve(__dirname, '../src', 'assets/scss/global.scss'),
+      projectDirectory: path.resolve(__dirname, '../src')
     }
   },
   defineConstants: {},

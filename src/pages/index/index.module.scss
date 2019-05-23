@@ -1,0 +1,61 @@
+@import '../../assets/scss/global.scss';
+
+.header {
+  height: 488px;
+  background: rgba(204, 44, 59, 1) url($FILE_HOST+'common_ic_logo.png') no-repeat 95% center/ 194px auto;
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+}
+
+.infoWrap {
+  position: relative;
+}
+
+.info {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  right: 32px;
+  padding-top: 80px;
+  box-shadow: 0px 4px 15px 0px rgba(153, 153, 153, 0.24);
+  border-radius: 8px;
+  transform: translateY(-50%);
+  background: #ffffff;
+  z-index: 11;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.operaWrap {
+  position: relative;
+  margin-top: 180px;
+  padding: 80px 32px 0 32px;
+}
+
+.subTitle {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  font-size: 32px;
+  font-weight: 500;
+  color: #333333;
+  padding-left: 16px;
+  &.opera {
+    left: 64px;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 6px;
+    height: 70%;
+    transform: translateY(-50%);
+    background: $primary-color;
+  }
+}
