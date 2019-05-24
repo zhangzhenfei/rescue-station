@@ -29,12 +29,13 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/login/index',
-      'pages/index/index',
-      'pages/cabinet/index',
-      'pages/map/index',
-      'pages/mine/index',
-      'pages/splash/index'
+      'pages/login/index', // 登录
+      'pages/index/index', // 主页
+      'pages/cabinet/index', // 机柜
+      'pages/cabinet/pages/detail/index', // 机柜详情
+      'pages/map/index', // 地图
+      'pages/mine/index', // 我的
+      'pages/splash/index' // 欢迎页
     ],
     window: {
       backgroundTextStyle: 'light',

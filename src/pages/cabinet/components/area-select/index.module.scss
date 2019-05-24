@@ -1,0 +1,47 @@
+@import '../../../../assets/scss/global.scss';
+
+.content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  z-index: 1;
+  padding-top: 160px;
+  .wrap {
+    $item-height: 80px;
+    white-space: nowrap;
+    border-top: $border;
+    height: 600px;
+    padding-bottom: 150px;
+    .list {
+      display: inline-block;
+      width: 180px;
+      height: 100%;
+      border-right: $border;
+    }
+    .item {
+      height: $item-height;
+      line-height: $item-height;
+      padding-left: 32px;
+      color: #333333;
+      border-bottom: $border;
+      &.active {
+        color: $primary-color;
+        background-color: #fff6f7;
+      }
+    }
+  }
+  .btns {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    border-top: $border;
+    .btn {
+      flex: 1;
+      padding: 32px;
+    }
+  }
+}

@@ -3,7 +3,13 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text, Image } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 
+import AreaSelect from './components/area-select/index'
+
 const styles = require('./index.module.scss')
+
+interface IState {
+  showAreaSelect: false
+}
 
 type PageStateProps = {
   counterStore: {
@@ -32,6 +38,10 @@ class Index extends Component {
     navigationBarTitleText: '首页'
   }
 
+  state: IState = {
+    showAreaSelect: false
+  }
+
   componentWillMount() {}
 
   componentWillReact() {
@@ -46,20 +56,32 @@ class Index extends Component {
 
   componentDidHide() {}
 
+  handleClickOrgBtn() {
+    this.setState({ showAreaSelect: true })
+  }
+
+  navigateToDetail() {
+    Taro.navigateTo({ url: '/pages/cabinet/pages/detail/index' })
+  }
+
   render() {
+    const { showAreaSelect } = this.state
     return (
       <View className="container">
         <View className={styles.header}>
           <View className={styles.headerTitle}>我的机柜</View>
           <View className={styles.headerOrg}>
             <Text>机构：</Text>
-            <Text className={styles.headerOrgBtn}>全部</Text>
+            <Text className={styles.headerOrgBtn} onClick={this.handleClickOrgBtn.bind(this)}>
+              全部
+            </Text>
           </View>
         </View>
+        <AreaSelect show={showAreaSelect} />
         <View className={styles.content}>
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map(i => {
             return (
-              <View className={styles.listItem} key={i}>
+              <View className={styles.listItem} key={i} onClick={this.navigateToDetail.bind(this)}>
                 <Image mode="aspectFit" lazyLoad={true} className={styles.img} />
                 <View className={styles.listContent}>
                   <View>
