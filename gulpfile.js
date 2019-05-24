@@ -6,11 +6,11 @@ const sftp = require('gulp-sftp')
  *  上传测试环境
  */
 gulp.task('upload:ali', () =>
-  gulp.src('dist/**').pipe(
+  gulp.src('dist/h5/**').pipe(
     sftp({
-      host: '47.112.112.220',
+      host: '47.107.237.94',
       user: 'root',
-      pass: 'xinfangwangABC!@#',
+      pass: 'LTxiaofanggui!@#',
       remotePath: '/mnt/app'
     })
   )

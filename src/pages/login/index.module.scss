@@ -26,6 +26,9 @@
 .form {
   text-align: left;
   padding: 88px 80px;
+  &::after {
+    border: none;
+  }
 }
 .submit {
   margin-top: 128px;
