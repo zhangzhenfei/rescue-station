@@ -6,6 +6,9 @@ import { observer, inject } from '@tarojs/mobx'
 import { AtNavBar, AtGrid } from 'taro-ui'
 import { FILE_HOST } from '@/consts'
 
+import Modal from './components/modal'
+import { ModalType } from './components/modal/interface'
+
 const styles = require('./index.module.scss')
 
 type PageStateProps = {
@@ -21,6 +24,13 @@ interface Index {
   props: PageStateProps
 }
 
+interface IState {
+  currentModal: {
+    show: boolean
+    type: ModalType
+  }
+}
+
 @inject('counterStore')
 @observer
 class Index extends Component {
@@ -33,6 +43,13 @@ class Index extends Component {
    */
   config: Config = {
     navigationBarTitleText: '首页'
+  }
+
+  state: IState = {
+    currentModal: {
+      show: false,
+      type: ModalType.LOCK
+    }
   }
 
   componentWillMount() {}
@@ -63,11 +80,24 @@ class Index extends Component {
     const { counterStore } = this.props
     counterStore.incrementAsync()
   }
+  navigateBack = () => {
+    Taro.navigateBack()
+  }
+
+  showCtrl(type: ModalType) {
+    this.setState({ currentModal: { show: true, type } })
+  }
 
   render() {
+    const { currentModal } = this.state
     return (
       <View className={[styles.container, 'container'].join(' ')}>
-        <AtNavBar color="#000" fixed={true} leftIconType="chevron-left" />
+        <AtNavBar
+          color="#000"
+          fixed={true}
+          leftIconType="chevron-left"
+          onClickLeftIcon={this.navigateBack.bind(this)}
+        />
         <View className={styles.header}>
           <View className={styles.title}>朝阳公园消防柜A</View>
           <View className={styles.desc}>AC132423</View>
@@ -80,7 +110,7 @@ class Index extends Component {
           </View>
         </View>
         <View className={styles.ctrl}>
-          <View className={styles.wrap}>
+          <View className={styles.wrap} onClick={this.showCtrl.bind(this, ModalType.WARN)}>
             <View className={styles.detail}>
               <Image
                 src={FILE_HOST + 'guizi_ic_jingbao01.png'}
@@ -91,13 +121,13 @@ class Index extends Component {
               <Text>警报控制</Text>
             </View>
           </View>
-          <View className={styles.wrap}>
+          <View className={styles.wrap} onClick={this.showCtrl.bind(this, ModalType.LOCK)}>
             <View className={styles.detail}>
               <Image src={FILE_HOST + 'guizi_ic_door01.png'} mode="widthFix" lazyLoad={true} className={styles.icon} />
               <Text>门锁控制</Text>
             </View>
           </View>
-          <View className={styles.wrap}>
+          <View className={styles.wrap} onClick={this.showCtrl.bind(this, ModalType.SCREEN)}>
             <View className={styles.detail}>
               <Image
                 src={FILE_HOST + 'guizi_ic_videocontrol01.png'}
@@ -139,6 +169,7 @@ class Index extends Component {
             ]}
           />
         </View>
+        <Modal show={currentModal.show} modalType={currentModal.type} />
       </View>
     )
   }
