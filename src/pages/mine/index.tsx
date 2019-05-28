@@ -1,42 +1,19 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, Text } from '@tarojs/components'
-import { observer, inject } from '@tarojs/mobx'
+import { View, Text, Image } from '@tarojs/components'
+import { AtAvatar, AtButton } from 'taro-ui'
+import { FILE_HOST } from '@/consts/index'
 
-import './index.module.scss'
+const styles = require('./index.module.scss')
 
-type PageStateProps = {
-  counterStore: {
-    counter: number
-    increment: Function
-    decrement: Function
-    incrementAsync: Function
-  }
-}
-
-interface Index {
-  props: PageStateProps
-}
-
-@inject('counterStore')
-@observer
 class Index extends Component {
-  /**
-   * 指定config的类型声明为: Taro.Config
-   *
-   * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
-   * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
-   * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
-   */
   config: Config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '我的'
   }
 
   componentWillMount() {}
 
-  componentWillReact() {
-    console.log('componentWillReact')
-  }
+  componentWillReact() {}
 
   componentDidMount() {}
 
@@ -46,31 +23,58 @@ class Index extends Component {
 
   componentDidHide() {}
 
-  increment = () => {
-    const { counterStore } = this.props
-    counterStore.increment()
-  }
-
-  decrement = () => {
-    const { counterStore } = this.props
-    counterStore.decrement()
-  }
-
-  incrementAsync = () => {
-    const { counterStore } = this.props
-    counterStore.incrementAsync()
-  }
-
   render() {
-    const {
-      counterStore: { counter }
-    } = this.props
     return (
-      <View className="index">
-        <Button onClick={this.increment}>+</Button>
-        <Button onClick={this.decrement}>-</Button>
-        <Button onClick={this.incrementAsync}>Add Async</Button>
-        <Text>{counter}</Text>
+      <View className={styles.contentWrap}>
+        <View className={styles.header}>
+          <AtAvatar
+            className={styles.headerImg}
+            size="large"
+            image={''}
+            circle={true}
+          />
+          <View className={styles.headerInfo}>
+            <View className={styles.name}>黄志远</View>
+            <View className={styles.role}>管理员</View>
+          </View>
+        </View>
+        <View className={styles.listItem} style={{ marginTop: 24 }}>
+          <Image className={styles.icon} src={`${FILE_HOST}me_ic_call.png`} />
+          <Text className={styles.name}>我的电话</Text>
+          <Text className={styles.right}>15919177724</Text>
+        </View>
+        <View className={styles.listItem}>
+          <Image
+            className={styles.icon}
+            src={`${FILE_HOST}me_ic_mechanism.png`}
+          />
+          <Text className={styles.name}>所属机构</Text>
+          <Text className={styles.right}>北京市/朝阳区</Text>
+        </View>
+        <View className={styles.listItem}>
+          <Image
+            className={styles.icon}
+            src={`${FILE_HOST}me_ic_incumbency.png`}
+          />
+          <Text className={styles.name}>在职时间</Text>
+          <Text className={styles.right}>2019.05.01-至今</Text>
+        </View>
+
+        <View
+          className={styles.listItem}
+          onClick={() => {}}
+          style={{ marginTop: 24 }}
+        >
+          <Image className={styles.icon} src={`${FILE_HOST}me_ic_fllow.png`} />
+          <Text className={styles.name}>关于我们</Text>
+          <Image
+            className={styles.arrow}
+            src={`${FILE_HOST}common_ic_nnarrow.png`}
+          />
+        </View>
+        <AtButton type="primary" className={styles.loginOut}>
+          退出
+        </AtButton>
       </View>
     )
   }
