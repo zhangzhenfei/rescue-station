@@ -90,14 +90,17 @@ class Index extends Component {
     }
     return (
       <View className={[styles.container, 'container'].join(' ')}>
-        <AtNavBar
-          color="#000"
-          fixed={true}
-          title={typeTitleMap[type]}
-          leftIconType="chevron-left"
-          onClickLeftIcon={this.navigateBack.bind(this)}
-        />
-        <Materials type={OperaType.IN} />
+        <View>
+          <AtNavBar
+            color="#000"
+            title={typeTitleMap[type]}
+            leftIconType="chevron-left"
+            onClickLeftIcon={this.navigateBack.bind(this)}
+          />
+        </View>
+        <View className={styles.wrap}>
+          <Materials type={OperaType.IN} />
+        </View>
       </View>
     )
   }
