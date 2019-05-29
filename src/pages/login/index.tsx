@@ -2,6 +2,8 @@ import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Image } from '@tarojs/components'
 import { AtForm, AtInput, AtButton, AtMessage } from 'taro-ui'
+import { login } from './assets/api'
+import { log } from '@/utils/common'
 
 const styles = require('./index.module.scss')
 
@@ -28,7 +30,6 @@ class Index extends Component {
   componentDidHide() {}
 
   handleInputChange(type, val) {
-    console.log(`type:${type};val:${val}`)
     this.setState({
       [type]: val
     })
@@ -54,11 +55,14 @@ class Index extends Component {
     return true
   }
 
-  login() {
+  public async login() {
     if (this.validateForm()) {
-      Taro.switchTab({ url: '/pages/index/index' })
+      const { account, password } = this.state
+      const result = await login(account, password)
+      if (result.head.ret === 0) {
+        Taro.switchTab({ url: '/pages/index/index' })
+      }
     }
-    // Taro.switchTab({ url: '/pages/index/index' })
   }
 
   render() {
