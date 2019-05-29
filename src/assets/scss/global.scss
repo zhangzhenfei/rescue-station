@@ -7,3 +7,12 @@ $line-color: #eeeeee; // 线的颜色
 $FILE_HOST: 'http://m.sadais.com/rescue/img/app_h5/';
 
 $border: #eeeeee 2px solid;
+
+.taro_router {
+  height: 100%;
+}
+
+.taro_page {
+  height: 100%;
+  overflow: auto;
+}
