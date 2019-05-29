@@ -39,6 +39,7 @@ class App extends Component {
       'pages/cabinet/pages/material-change/index', // 物资更换
       'pages/map/index', // 地图
       'pages/mine/index', // 我的
+      'pages/resource/pages/types/index', // 资源类型
       'pages/splash/index' // 欢迎页
     ],
     window: {

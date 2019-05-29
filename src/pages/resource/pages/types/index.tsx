@@ -1,7 +1,8 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import { AtButton, AtMessage } from 'taro-ui'
+import { AtButton, AtMessage, AtNavBar } from 'taro-ui'
+
 import { findPageList } from './assets/api'
 import { IResourceType } from './assets/interface'
 import { IListResult } from '@/interfaces/index'
@@ -18,7 +19,10 @@ class Index extends Component {
     pageNo: 1
   }
 
-  componentWillMount() {}
+  componentWillMount() {
+    log('加载数据')
+    this.loadData()
+  }
 
   componentWillReact() {}
 
