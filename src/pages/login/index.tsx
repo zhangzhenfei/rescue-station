@@ -61,6 +61,7 @@ class Index extends Component {
       const result = await login(account, password)
       if (result.head.ret === 0) {
         Taro.switchTab({ url: '/pages/index/index' })
+        // xxx
       }
     }
   }
