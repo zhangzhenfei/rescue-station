@@ -30,33 +30,6 @@ interface IState {
     type: ModalType
   }
 }
-const carbinetOpera = [
-  {
-    image: FILE_HOST + 'guizi_ic_in.png',
-    value: '物资入库',
-    url: '/pages/cabinet/pages/materials/index?type=in'
-  },
-  {
-    image: FILE_HOST + 'guizi_ic_out.png',
-    value: '物资出库',
-    url: '/pages/cabinet/pages/materials/index?type=out'
-  },
-  {
-    image: FILE_HOST + 'guizi_ic_replace.png',
-    value: '物资更换',
-    url: '/pages/cabinet/pages/materials/index?type=change'
-  },
-  {
-    image: FILE_HOST + 'guizi_ic_video.png',
-    value: 'LED大屏',
-    url: ''
-  },
-  {
-    image: FILE_HOST + 'guizi_ic_report.png',
-    value: '维护上报',
-    url: ''
-  }
-]
 
 @inject('counterStore')
 @observer
@@ -115,10 +88,6 @@ class Index extends Component {
     this.setState({ currentModal: { show: true, type } })
   }
 
-  handleCabinetClick(item) {
-    Taro.navigateTo({ url: item.url })
-  }
-
   render() {
     const { currentModal } = this.state
     return (
@@ -126,7 +95,6 @@ class Index extends Component {
         <AtNavBar
           color="#000"
           fixed={true}
-          title="朝阳公园消防柜A"
           leftIconType="chevron-left"
           onClickLeftIcon={this.navigateBack.bind(this)}
         />
@@ -177,8 +145,28 @@ class Index extends Component {
             mode="square"
             columnNum={3}
             hasBorder={true}
-            data={carbinetOpera}
-            onClick={this.handleCabinetClick.bind(this)}
+            data={[
+              {
+                image: FILE_HOST + 'guizi_ic_in.png',
+                value: '物资入库'
+              },
+              {
+                image: FILE_HOST + 'guizi_ic_out.png',
+                value: '物资出库'
+              },
+              {
+                image: FILE_HOST + 'guizi_ic_replace.png',
+                value: '物资更换'
+              },
+              {
+                image: FILE_HOST + 'guizi_ic_video.png',
+                value: 'LED大屏'
+              },
+              {
+                image: FILE_HOST + 'guizi_ic_report.png',
+                value: '维护上报'
+              }
+            ]}
           />
         </View>
         <Modal show={currentModal.show} modalType={currentModal.type} />

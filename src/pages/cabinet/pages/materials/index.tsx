@@ -7,7 +7,6 @@ import { AtNavBar, AtGrid } from 'taro-ui'
 import { FILE_HOST } from '@/consts'
 
 import Modal from './components/modal'
-import { ModalType } from './components/modal/interface'
 
 const styles = require('./index.module.scss')
 
@@ -25,38 +24,8 @@ interface Index {
 }
 
 interface IState {
-  currentModal: {
-    show: boolean
-    type: ModalType
-  }
+  type: String
 }
-const carbinetOpera = [
-  {
-    image: FILE_HOST + 'guizi_ic_in.png',
-    value: '物资入库',
-    url: '/pages/cabinet/pages/materials/index?type=in'
-  },
-  {
-    image: FILE_HOST + 'guizi_ic_out.png',
-    value: '物资出库',
-    url: '/pages/cabinet/pages/materials/index?type=out'
-  },
-  {
-    image: FILE_HOST + 'guizi_ic_replace.png',
-    value: '物资更换',
-    url: '/pages/cabinet/pages/materials/index?type=change'
-  },
-  {
-    image: FILE_HOST + 'guizi_ic_video.png',
-    value: 'LED大屏',
-    url: ''
-  },
-  {
-    image: FILE_HOST + 'guizi_ic_report.png',
-    value: '维护上报',
-    url: ''
-  }
-]
 
 @inject('counterStore')
 @observer
@@ -69,17 +38,18 @@ class Index extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '物资管理'
   }
 
   state: IState = {
-    currentModal: {
-      show: false,
-      type: ModalType.LOCK
-    }
+    type: 'in'
   }
 
-  componentWillMount() {}
+  componentWillMount() {
+    this.setState({
+      type: this.$router.params.type
+    })
+  }
 
   componentWillReact() {
     console.log('componentWillReact')
@@ -111,22 +81,19 @@ class Index extends Component {
     Taro.navigateBack()
   }
 
-  showCtrl(type: ModalType) {
-    this.setState({ currentModal: { show: true, type } })
-  }
-
-  handleCabinetClick(item) {
-    Taro.navigateTo({ url: item.url })
-  }
-
   render() {
-    const { currentModal } = this.state
+    const { type } = this.state
+    const typeTitleMap = {
+      in: '物资入库',
+      out: '物资出库',
+      change: '物资更换'
+    }
     return (
       <View className={[styles.container, 'container'].join(' ')}>
         <AtNavBar
           color="#000"
           fixed={true}
-          title="朝阳公园消防柜A"
+          title={typeTitleMap[type]}
           leftIconType="chevron-left"
           onClickLeftIcon={this.navigateBack.bind(this)}
         />
@@ -141,47 +108,36 @@ class Index extends Component {
             <View className={styles.state}>门锁开启</View>
           </View>
         </View>
-        <View className={styles.ctrl}>
-          <View className={styles.wrap} onClick={this.showCtrl.bind(this, ModalType.WARN)}>
-            <View className={styles.detail}>
-              <Image
-                src={FILE_HOST + 'guizi_ic_jingbao01.png'}
-                mode="widthFix"
-                lazyLoad={true}
-                className={styles.icon}
-              />
-              <Text>警报控制</Text>
-            </View>
-          </View>
-          <View className={styles.wrap} onClick={this.showCtrl.bind(this, ModalType.LOCK)}>
-            <View className={styles.detail}>
-              <Image src={FILE_HOST + 'guizi_ic_door01.png'} mode="widthFix" lazyLoad={true} className={styles.icon} />
-              <Text>门锁控制</Text>
-            </View>
-          </View>
-          <View className={styles.wrap} onClick={this.showCtrl.bind(this, ModalType.SCREEN)}>
-            <View className={styles.detail}>
-              <Image
-                src={FILE_HOST + 'guizi_ic_videocontrol01.png'}
-                mode="widthFix"
-                lazyLoad={true}
-                className={styles.icon}
-              />
-              <Text>屏幕控制</Text>
-            </View>
-          </View>
-        </View>
         <View className={styles.operaWrap}>
           <View className={[styles.subTitle].join(' ')}>机柜操作</View>
           <AtGrid
             mode="square"
             columnNum={3}
             hasBorder={true}
-            data={carbinetOpera}
-            onClick={this.handleCabinetClick.bind(this)}
+            data={[
+              {
+                image: FILE_HOST + 'guizi_ic_in.png',
+                value: '物资入库'
+              },
+              {
+                image: FILE_HOST + 'guizi_ic_out.png',
+                value: '物资出库'
+              },
+              {
+                image: FILE_HOST + 'guizi_ic_replace.png',
+                value: '物资更换'
+              },
+              {
+                image: FILE_HOST + 'guizi_ic_video.png',
+                value: 'LED大屏'
+              },
+              {
+                image: FILE_HOST + 'guizi_ic_report.png',
+                value: '维护上报'
+              }
+            ]}
           />
         </View>
-        <Modal show={currentModal.show} modalType={currentModal.type} />
       </View>
     )
   }
