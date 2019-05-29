@@ -3,21 +3,9 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, ScrollView, Image } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 
-import { AtNavBar, AtButton } from 'taro-ui'
+import { AtNavBar } from 'taro-ui'
 
 const styles = require('./index.module.scss')
-
-const typeTitleMap = {
-  in: '物资入库',
-  out: '物资出库',
-  change: '物资更换'
-}
-
-const typeBtnMap = {
-  in: '入库',
-  out: '出库',
-  change: '更换'
-}
 
 type PageStateProps = {
   counterStore: {
@@ -54,11 +42,7 @@ class Index extends Component {
     type: 'in'
   }
 
-  componentWillMount() {
-    this.setState({
-      type: this.$router.params.type
-    })
-  }
+  componentWillMount() {}
 
   componentWillReact() {
     console.log('componentWillReact')
@@ -82,17 +66,12 @@ class Index extends Component {
   }
 
   render() {
-    const { type } = this.state
-
-    const title = typeTitleMap[type]
-    const btn = typeBtnMap[type]
-
     return (
       <View className={[styles.container, 'container'].join(' ')}>
         <View>
           <AtNavBar
             color="#000"
-            title={title}
+            title="请选择批次"
             leftIconType="chevron-left"
             onClickLeftIcon={this.navigateBack.bind(this)}
           />
@@ -110,9 +89,6 @@ class Index extends Component {
                         <View className={styles.listDesc}>NA-02</View>
                       </View>
                       <View className={styles.address}>剩余12个</View>
-                      <AtButton className={styles.btn} type="secondary" onClick={this.handleBtnClick.bind(this)}>
-                        {btn}
-                      </AtButton>
                     </View>
                   </View>
                 )

@@ -37,6 +37,8 @@ class App extends Component {
       'pages/cabinet/pages/material-in/index', // 物资入柜
       'pages/cabinet/pages/material-out/index', // 物资出柜
       'pages/cabinet/pages/material-change/index', // 物资更换
+      'pages/cabinet/pages/material-details/index', // 物资详情列表
+      'pages/cabinet/pages/material-batchs/index', // 物资批次列表
       'pages/map/index', // 地图
       'pages/mine/index', // 我的
       'pages/resource/pages/types/index', // 资源类型
