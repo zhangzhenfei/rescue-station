@@ -33,6 +33,10 @@ class App extends Component {
       'pages/index/index', // 主页
       'pages/cabinet/index', // 机柜
       'pages/cabinet/pages/detail/index', // 机柜详情
+      'pages/cabinet/pages/materials/index', // 物资列表
+      'pages/cabinet/pages/material-in/index', // 物资入柜
+      'pages/cabinet/pages/material-out/index', // 物资出柜
+      'pages/cabinet/pages/material-change/index', // 物资更换
       'pages/map/index', // 地图
       'pages/mine/index', // 我的
       'pages/resource/pages/types/index', // 资源类型

@@ -1,5 +1,9 @@
 @import '../../assets/scss/global.scss';
 
+.container {
+  background: $primary-bg-color;
+}
+
 .header {
   height: 488px;
   background: rgba(204, 44, 59, 1) url($FILE_HOST+'common_ic_logo.png') no-repeat 95% center/ 194px auto;

@@ -25,14 +25,9 @@ class Index extends Component {
 
   render() {
     return (
-      <View className={styles.contentWrap}>
+      <View className={[styles.contentWrap, 'container'].join(' ')}>
         <View className={styles.header}>
-          <AtAvatar
-            className={styles.headerImg}
-            size="large"
-            image={''}
-            circle={true}
-          />
+          <AtAvatar className={styles.headerImg} size="large" image={''} circle={true} />
           <View className={styles.headerInfo}>
             <View className={styles.name}>黄志远</View>
             <View className={styles.role}>管理员</View>
@@ -43,34 +38,76 @@ class Index extends Component {
           <Text className={styles.name}>我的电话</Text>
           <Text className={styles.right}>15919177724</Text>
         </View>
+        <View className={styles.listItem} style={{ marginTop: 24 }}>
+          <Image className={styles.icon} src={`${FILE_HOST}me_ic_call.png`} />
+          <Text className={styles.name}>我的电话</Text>
+          <Text className={styles.right}>15919177724</Text>
+        </View>
+        <View className={styles.listItem} style={{ marginTop: 24 }}>
+          <Image className={styles.icon} src={`${FILE_HOST}me_ic_call.png`} />
+          <Text className={styles.name}>我的电话</Text>
+          <Text className={styles.right}>15919177724</Text>
+        </View>
+        <View className={styles.listItem} style={{ marginTop: 24 }}>
+          <Image className={styles.icon} src={`${FILE_HOST}me_ic_call.png`} />
+          <Text className={styles.name}>我的电话</Text>
+          <Text className={styles.right}>15919177724</Text>
+        </View>
+        <View className={styles.listItem} style={{ marginTop: 24 }}>
+          <Image className={styles.icon} src={`${FILE_HOST}me_ic_call.png`} />
+          <Text className={styles.name}>我的电话</Text>
+          <Text className={styles.right}>15919177724</Text>
+        </View>
+        <View className={styles.listItem} style={{ marginTop: 24 }}>
+          <Image className={styles.icon} src={`${FILE_HOST}me_ic_call.png`} />
+          <Text className={styles.name}>我的电话</Text>
+          <Text className={styles.right}>15919177724</Text>
+        </View>
+        <View className={styles.listItem} style={{ marginTop: 24 }}>
+          <Image className={styles.icon} src={`${FILE_HOST}me_ic_call.png`} />
+          <Text className={styles.name}>我的电话</Text>
+          <Text className={styles.right}>15919177724</Text>
+        </View>
+        <View className={styles.listItem} style={{ marginTop: 24 }}>
+          <Image className={styles.icon} src={`${FILE_HOST}me_ic_call.png`} />
+          <Text className={styles.name}>我的电话</Text>
+          <Text className={styles.right}>15919177724</Text>
+        </View>
+        <View className={styles.listItem} style={{ marginTop: 24 }}>
+          <Image className={styles.icon} src={`${FILE_HOST}me_ic_call.png`} />
+          <Text className={styles.name}>我的电话</Text>
+          <Text className={styles.right}>15919177724</Text>
+        </View>
+        <View className={styles.listItem} style={{ marginTop: 24 }}>
+          <Image className={styles.icon} src={`${FILE_HOST}me_ic_call.png`} />
+          <Text className={styles.name}>我的电话</Text>
+          <Text className={styles.right}>15919177724</Text>
+        </View>
+        <View className={styles.listItem} style={{ marginTop: 24 }}>
+          <Image className={styles.icon} src={`${FILE_HOST}me_ic_call.png`} />
+          <Text className={styles.name}>我的电话</Text>
+          <Text className={styles.right}>15919177724</Text>
+        </View>
+        <View className={styles.listItem} style={{ marginTop: 24 }}>
+          <Image className={styles.icon} src={`${FILE_HOST}me_ic_call.png`} />
+          <Text className={styles.name}>我的电话</Text>
+          <Text className={styles.right}>15919177724</Text>
+        </View>
         <View className={styles.listItem}>
-          <Image
-            className={styles.icon}
-            src={`${FILE_HOST}me_ic_mechanism.png`}
-          />
+          <Image className={styles.icon} src={`${FILE_HOST}me_ic_mechanism.png`} />
           <Text className={styles.name}>所属机构</Text>
           <Text className={styles.right}>北京市/朝阳区</Text>
         </View>
         <View className={styles.listItem}>
-          <Image
-            className={styles.icon}
-            src={`${FILE_HOST}me_ic_incumbency.png`}
-          />
+          <Image className={styles.icon} src={`${FILE_HOST}me_ic_incumbency.png`} />
           <Text className={styles.name}>在职时间</Text>
           <Text className={styles.right}>2019.05.01-至今</Text>
         </View>
 
-        <View
-          className={styles.listItem}
-          onClick={() => {}}
-          style={{ marginTop: 24 }}
-        >
+        <View className={styles.listItem} onClick={() => {}} style={{ marginTop: 24 }}>
           <Image className={styles.icon} src={`${FILE_HOST}me_ic_fllow.png`} />
           <Text className={styles.name}>关于我们</Text>
-          <Image
-            className={styles.arrow}
-            src={`${FILE_HOST}common_ic_nnarrow.png`}
-          />
+          <Image className={styles.arrow} src={`${FILE_HOST}common_ic_nnarrow.png`} />
         </View>
         <AtButton type="primary" className={styles.loginOut}>
           退出
