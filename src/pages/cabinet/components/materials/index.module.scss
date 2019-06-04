@@ -24,6 +24,12 @@
     flex-direction: column;
     justify-content: space-between;
     padding-left: 32px;
+    position: relative;
+    .btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
   }
 
   .listTitle {

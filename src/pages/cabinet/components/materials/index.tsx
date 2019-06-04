@@ -33,6 +33,7 @@ class AreaSelect extends Component<IMaterials> {
                     <View className={styles.listDesc}>NA-02</View>
                   </View>
                   <View className={styles.address}>剩余12个</View>
+                  <AtButton className={styles.btn}>出库</AtButton>
                 </View>
               </View>
             )

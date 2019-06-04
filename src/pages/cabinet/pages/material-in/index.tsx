@@ -3,11 +3,10 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 
-import { AtNavBar, AtGrid } from 'taro-ui'
+import { AtNavBar } from 'taro-ui'
 import { FILE_HOST } from '@/consts'
 
-import Materials from '../../components/materials/index'
-import { OperaType } from '../../components/materials/interface'
+import Calender from '@/components/calender'
 
 const styles = require('./index.module.scss')
 
@@ -22,6 +21,10 @@ type PageStateProps = {
 
 interface Index {
   props: PageStateProps
+}
+
+interface IState {
+  showCalender: boolean
 }
 
 @inject('counterStore')
@@ -39,54 +42,54 @@ class Index extends Component {
   }
 
   state: IState = {
-    currentModal: {
-      show: false,
-      type: ModalType.LOCK
-    }
+    showCalender: false
   }
 
   componentWillMount() {}
 
-  componentWillReact() {
-    console.log('componentWillReact')
-  }
-
-  componentDidMount() {}
-
-  componentWillUnmount() {}
-
-  componentDidShow() {}
-
-  componentDidHide() {}
-
-  increment = () => {
-    const { counterStore } = this.props
-    counterStore.increment()
-  }
-
-  decrement = () => {
-    const { counterStore } = this.props
-    counterStore.decrement()
-  }
-
-  incrementAsync = () => {
-    const { counterStore } = this.props
-    counterStore.incrementAsync()
-  }
   navigateBack = () => {
     Taro.navigateBack()
   }
 
+  handleSelectMaterial() {
+    Taro.navigateTo({ url: '/pages/cabinet/pages/material-details/index' })
+  }
+
+  handleOpenCalender = () => {
+    this.setState({ showCalender: true })
+  }
+
   render() {
+    const { showCalender } = this.state
     return (
       <View className={[styles.container, 'container'].join(' ')}>
         <AtNavBar
           color="#000"
-          fixed={true}
+          title="入库"
           leftIconType="chevron-left"
           onClickLeftIcon={this.navigateBack.bind(this)}
         />
-        <Materials type={OperaType.IN} />
+        <Calender show={showCalender} />
+        <View className={styles.list}>
+          <View className={styles.listItem} onClick={this.handleSelectMaterial.bind(this)}>
+            <Text className={styles.name}>物资</Text>
+            <Text className={styles.right}>15919177724</Text>
+            <Image className={styles.arrow} src={`${FILE_HOST}common_ic_nnarrow.png`} />
+          </View>
+          <View className={styles.listItem} onClick={() => {}}>
+            <Text className={styles.name}>数量</Text>
+            <Text className={styles.right}>13</Text>
+            <Image className={styles.arrow} src={`${FILE_HOST}common_ic_nnarrow.png`} />
+          </View>
+        </View>
+
+        <View className={styles.list}>
+          <View className={styles.listItem} onClick={this.handleOpenCalender.bind(this)}>
+            <Text className={styles.name}>过期时间</Text>
+            <Text className={styles.right}>2022年09月10日</Text>
+            <Image className={styles.arrow} src={`${FILE_HOST}common_ic_nnarrow.png`} />
+          </View>
+        </View>
       </View>
     )
   }

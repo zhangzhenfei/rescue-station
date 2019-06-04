@@ -1,11 +1,11 @@
-import { View, Text, Image } from './node_modules/@/pages/cabinet/pages/material/components/modal/node_modules/@tarojs/components'
-import Taro, { Component } from './node_modules/@/pages/cabinet/pages/material/components/modal/node_modules/@tarojs/taro'
-import { AtButton } from './node_modules/@/pages/cabinet/pages/material/components/modal/node_modules/taro-ui'
+import { View, Text, Image } from '@tarojs/components'
+import Taro, { Component } from '@tarojs/taro'
+import { AtButton } from 'taro-ui'
 import { IModal, ModalType } from './interface'
 
 const styles = require('./index.module.scss')
 
-import { FILE_HOST } from './node_modules/@/consts'
+import { FILE_HOST } from '@/consts'
 
 interface IState {
   _show: boolean

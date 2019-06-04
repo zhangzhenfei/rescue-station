@@ -54,11 +54,7 @@ class Index extends Component {
     type: 'in'
   }
 
-  componentWillMount() {
-    this.setState({
-      type: this.$router.params.type
-    })
-  }
+  componentWillMount() {}
 
   componentWillReact() {
     console.log('componentWillReact')
@@ -82,17 +78,12 @@ class Index extends Component {
   }
 
   render() {
-    const { type } = this.state
-
-    const title = typeTitleMap[type]
-    const btn = typeBtnMap[type]
-
     return (
       <View className={[styles.container, 'container'].join(' ')}>
         <View>
           <AtNavBar
             color="#000"
-            title={title}
+            title="请选择物资"
             leftIconType="chevron-left"
             onClickLeftIcon={this.navigateBack.bind(this)}
           />
@@ -110,9 +101,6 @@ class Index extends Component {
                         <View className={styles.listDesc}>NA-02</View>
                       </View>
                       <View className={styles.address}>剩余12个</View>
-                      <AtButton className={styles.btn} type="secondary" onClick={this.handleBtnClick.bind(this)}>
-                        {btn}
-                      </AtButton>
                     </View>
                   </View>
                 )
