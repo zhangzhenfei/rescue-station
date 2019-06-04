@@ -26,7 +26,7 @@ class Index extends Component {
   handleGridItemClick(item, index, event) {
     switch (index) {
       case 0:
-        Taro.navigateTo({ url: '/pages/resource-manage/pages/types/index' })
+        Taro.navigateTo({ url: '/pages/resource/pages/types/index' })
         break
       default:
         break
