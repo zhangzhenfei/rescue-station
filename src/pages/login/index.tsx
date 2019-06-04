@@ -13,8 +13,8 @@ class Index extends Component {
   }
 
   public state = {
-    account: '',
-    password: ''
+    account: '15919177724',
+    password: '111111'
   }
 
   componentWillMount() {}

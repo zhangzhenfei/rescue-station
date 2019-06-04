@@ -6,7 +6,7 @@ import { observer, inject } from '@tarojs/mobx'
 import { AtNavBar } from 'taro-ui'
 import { FILE_HOST } from '@/consts'
 
-import Calender from '@/components/calender'
+import Calender from '@/components/Calender'
 
 const styles = require('./index.module.scss')
 

@@ -26,7 +26,7 @@ class Index extends Component {
   handleGridItemClick(item, index, event) {
     switch (index) {
       case 0:
-        Taro.navigateTo({ url: '/pages/resource/pages/types/index' })
+        Taro.navigateTo({ url: '/pages/index/pages/resource/pages/types/index' })
         break
       default:
         break
@@ -66,9 +66,7 @@ class Index extends Component {
         </View>
 
         <View className={styles.operaWrap}>
-          <View className={[styles.subTitle, styles.opera].join(' ')}>
-            救援管理
-          </View>
+          <View className={[styles.subTitle, styles.opera].join(' ')}>救援管理</View>
           <AtGrid
             mode="square"
             columnNum={3}
