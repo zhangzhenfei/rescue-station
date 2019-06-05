@@ -3,10 +3,15 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { AtForm, AtInput, AtNavBar, AtTextarea, AtButton } from 'taro-ui'
 import { observer, inject } from '@tarojs/mobx'
-
 import InputWrap from '@/components/InputWrap'
 
+import { saveOrUpdate } from './api'
+
 const styles = require('./index.module.scss')
+
+interface IState {
+  isEdit: number
+}
 
 type PageStateProps = {
   indexStore: {
@@ -26,11 +31,18 @@ class Index extends Component {
     navigationBarTitleText: '新增物资种类'
   }
 
+  public state: IState = {
+    isEdit: 0
+  }
+
   componentWillReceiveProps() {}
 
   componentWillReact() {}
 
-  componentDidMount() {}
+  componentDidMount() {
+    const { isEdit } = this.$router.params
+    isEdit && this.setState({ isEdit: parseInt(isEdit) })
+  }
 
   componentWillUnmount() {}
 
@@ -50,11 +62,18 @@ class Index extends Component {
     })
   }
 
-  handleSave() {
-    console.log(this)
+  async handleSave() {
+    const responseRes = await saveOrUpdate(this.props.indexStore.editResourceType)
+    if (responseRes.head.ret === 0) {
+      Taro.showToast({ title: `${this.state.isEdit ? '修改' : '新增'}成功`, icon: 'none' })
+      setTimeout(() => {
+        this.navigateBack()
+      }, 1000)
+    }
   }
 
   render() {
+    const { isEdit } = this.state
     const {
       indexStore: { editResourceType }
     } = this.props
@@ -63,7 +82,7 @@ class Index extends Component {
         <View>
           <AtNavBar
             color="#000"
-            title="新增物资种类"
+            title={`${isEdit ? '编辑' : '新增'}物资种类`}
             leftIconType="chevron-left"
             onClickLeftIcon={this.navigateBack.bind(this)}
           />
@@ -83,7 +102,6 @@ class Index extends Component {
             </View>
             <View className={[styles.row, styles.textAreaWrap].join(' ')}>
               <View className={styles.title}>描述</View>
-              <textarea onChange={this.changeFromEvt.bind(this, 'remark')} />
               <AtTextarea
                 count={true}
                 value={editResourceType.remark}

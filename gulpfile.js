@@ -6,7 +6,7 @@ const sftp = require('gulp-sftp')
  *  上传测试环境
  */
 gulp.task('upload:ali', () =>
-  gulp.src('dist/h5/**').pipe(
+  gulp.src('dist/**').pipe(
     sftp({
       host: '47.107.237.94',
       user: 'root',

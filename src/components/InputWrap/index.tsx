@@ -30,7 +30,7 @@ class InputWrap extends Component<IInput> {
           </View>
         )}
         <View className={styles.content}>{this.props.children}</View>
-        <Image className={styles.arrow} src={`${FILE_HOST}common_ic_nnarrow.png`} />
+        {moreIcon && <Image className={styles.arrow} src={`${FILE_HOST}common_ic_nnarrow.png`} />}
       </View>
     )
   }

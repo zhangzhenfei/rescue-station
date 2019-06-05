@@ -7,12 +7,7 @@ import request from '@/utils/request'
  * @param {string} remark
  * @returns Promise
  */
-export const saveOrUpdate = async (id, name, remark) => {
-  const params = {
-    id,
-    name,
-    remark
-  }
+export const saveOrUpdate = async params => {
   const data = await request.post('/api/lt/rescue/v1/mt/saveorupdate', params)
   return data
 }

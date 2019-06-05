@@ -7,7 +7,7 @@ import { observer, inject } from '@tarojs/mobx'
 import { findPageList } from './assets/api'
 import { IResourceType } from './assets/interface'
 import { IListResult } from '@/interfaces/index'
-import { log } from '@/utils/common'
+import { log, navigateTo, navigateBack } from '@/utils/common'
 
 const styles = require('./index.module.scss')
 
@@ -43,23 +43,38 @@ class Index extends Component {
     result: []
   }
 
+  constructor(props) {
+    super(...arguments)
+    this.componentDidShow.bind(this)
+  }
+
   componentWillMount() {
     log('加载数据')
     this.loadData()
   }
 
-  componentWillReact() {}
+  componentWillReact() {
+    log('componentWillReact', this)
+  }
 
-  componentDidMount() {}
+  componentDidMount() {
+    log('componentDidMount', this)
+  }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    log('componentWillUnmount', this)
+  }
 
-  componentDidShow() {}
+  componentDidShow() {
+    log('componentDidShow', this)
+  }
 
-  componentDidHide() {}
+  componentDidHide() {
+    log('componentDidHide', this)
+  }
 
   navigateBack = () => {
-    Taro.navigateBack()
+    navigateBack()
   }
 
   async loadData() {
@@ -76,10 +91,9 @@ class Index extends Component {
   }
 
   handleNewOrEdit(item) {
-    if (item) {
-      this.props.indexStore.setEditResourceType(item)
-    }
-    Taro.navigateTo({ url: '/pages/index/pages/resource/pages/types-edit/index' })
+    this.props.indexStore.setEditResourceType(item || {})
+    this.setState({ isEdit: false })
+    navigateTo('/pages/index/pages/resource/pages/types-edit/index', { isEdit: item ? 1 : 0 })
   }
 
   render() {
@@ -130,7 +144,7 @@ class Index extends Component {
             </ScrollView>
           )}
           {!isEdit && (
-            <AtButton type="primary" className={styles.btn} onClick={this.handleNewOrEdit.bind(this)}>
+            <AtButton type="primary" className={styles.btn} onClick={this.handleNewOrEdit.bind(this, false)}>
               新增物资种类
             </AtButton>
           )}
