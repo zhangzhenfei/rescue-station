@@ -4,7 +4,7 @@ import { View, ScrollView, Image } from '@tarojs/components'
 import { AtForm, AtInput, AtNavBar, AtTextarea, AtButton } from 'taro-ui'
 import { observer, inject } from '@tarojs/mobx'
 import InputWrap from '@/components/InputWrap'
-
+import { uploadFile } from '@/utils/upload'
 import { saveOrUpdate } from './api'
 
 const styles = require('./index.module.scss')
@@ -72,6 +72,16 @@ class Index extends Component {
     }
   }
 
+  async handleChooseImage() {
+    const result = await Taro.chooseImage({
+      count: 1, // 默认9
+      sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'] // 可以指定来源是相册还是相机，默认二者都有
+    })
+    console.log(result)
+    uploadFile()
+  }
+
   render() {
     const { isEdit } = this.state
     const {
@@ -103,7 +113,7 @@ class Index extends Component {
               </View>
               <View className={styles.row}>
                 <InputWrap title="图片">
-                  <View className={styles.uploadWrap}>
+                  <View className={styles.uploadWrap} onClick={this.handleChooseImage.bind(this)}>
                     <View className={styles.imgWrap}>
                       {editMaterial.img && (
                         <Image mode="scaleToFill" src={editMaterial.img} lazyLoad={true} className={styles.img} />

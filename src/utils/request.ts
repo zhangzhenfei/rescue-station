@@ -27,13 +27,13 @@ const request = async (url, data, method) => {
 }
 
 export default {
-  get(url, data) {
+  get(url, data = {}) {
     const baseUrl = CONSTS.API_HOST
     const targetUrl = url.indexOf('http') === -1 ? baseUrl + url : url
     // log('发起GET请求')
     return request(targetUrl, data, 'POST')
   },
-  post(url, data) {
+  post(url, data = {}) {
     const baseUrl = CONSTS.API_HOST
     const targetUrl = url.indexOf('http') === -1 ? baseUrl + url : url
     // log('发起POST请求')
