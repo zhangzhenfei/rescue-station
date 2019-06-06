@@ -33,8 +33,9 @@ class App extends Component {
     pages: [
       'pages/login/index', // 登录
       'pages/index/index', // 主页
-      'pages/index/pages/resource/pages/types/index', // 物资种类管理
-      'pages/index/pages/resource/pages/types-edit/index', // 物资新增/编辑
+      'pages/index/pages/types/index', // 物资种类管理
+      'pages/index/pages/types-edit/index', // 物资新增/编辑
+      'pages/index/pages/materials/index', // 物资管理
       'pages/cabinet/index', // 机柜
       'pages/cabinet/pages/detail/index', // 机柜详情
       'pages/cabinet/pages/materials/index', // 物资列表

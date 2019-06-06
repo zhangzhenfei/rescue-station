@@ -103,7 +103,11 @@ export const navigateBack = Taro.navigateBack
 const _openInterceptor = (method, url, params) => {
   if (isPageNavigating) return
   isPageNavigating = true
-
+  // 处理url
+  if (url.indexOf('/') !== 0) {
+    url = '/' + url
+  }
+  // 处理参数
   params = param(params)
 
   log('使用导航：', method, url, params)

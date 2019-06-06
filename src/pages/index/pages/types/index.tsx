@@ -45,7 +45,6 @@ class Index extends Component {
 
   constructor(props) {
     super(...arguments)
-    this.componentDidShow.bind(this)
   }
 
   componentWillMount() {
@@ -66,7 +65,7 @@ class Index extends Component {
   }
 
   componentDidShow() {
-    log('componentDidShow', this)
+    console.log('componentDidShow', this)
   }
 
   componentDidHide() {
@@ -93,7 +92,7 @@ class Index extends Component {
   handleNewOrEdit(item) {
     this.props.indexStore.setEditResourceType(item || {})
     this.setState({ isEdit: false })
-    navigateTo('/pages/index/pages/resource/pages/types-edit/index', { isEdit: item ? 1 : 0 })
+    navigateTo('/pages/index/pages/types-edit/index', { isEdit: item ? 1 : 0 })
   }
 
   render() {
@@ -134,7 +133,9 @@ class Index extends Component {
                           </AtButton>
                         </View>
                         <View className={styles.btnWrap}>
-                          <AtButton size="small">删除</AtButton>
+                          <AtButton type="secondary" size="small">
+                            删除
+                          </AtButton>
                         </View>
                       </View>
                     )}
