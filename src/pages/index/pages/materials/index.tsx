@@ -19,6 +19,19 @@ interface IState {
   materials: IMaterials[]
 }
 
+type PageStateProps = {
+  indexStore: {
+    editMaterial: any
+    setEditMaterial: Function
+  }
+}
+
+interface Index {
+  props: PageStateProps
+}
+
+@inject('indexStore')
+@observer
 class Index extends Component {
   /**
    * 指定config的类型声明为: Taro.Config
@@ -65,7 +78,7 @@ class Index extends Component {
   }
 
   navigateBack = () => {
-    Taro.navigateBack()
+    navigateBack()
   }
 
   handleToggleStatus() {
@@ -73,7 +86,9 @@ class Index extends Component {
   }
 
   handleNewOrEdit(item) {
-    navigateTo('/pages/index/pages/types-edit/index', { isEdit: item ? 1 : 0 })
+    this.props.indexStore.setEditMaterial(item || {})
+    this.setState({ isEdit: false })
+    navigateTo('/pages/index/pages/materials-edit/index', { isEdit: item ? 1 : 0 })
   }
 
   render() {

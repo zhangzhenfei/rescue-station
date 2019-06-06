@@ -1,13 +1,15 @@
 import { observable } from 'mobx'
 
 const counterStore = observable({
-  // state
-  editResourceType: {
-    name: '',
-    remark: ''
-  },
+  // 物资种类
+  editResourceType: {},
+  // 物资
+  editMaterial: {},
   setEditResourceType(editResourceType) {
     this.editResourceType = editResourceType
+  },
+  setEditMaterial(editMaterial) {
+    this.editMaterial = editMaterial
   }
 })
 export default counterStore

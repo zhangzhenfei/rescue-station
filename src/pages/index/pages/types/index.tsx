@@ -1,7 +1,7 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, ScrollView, Text } from '@tarojs/components'
-import { AtButton, AtMessage, AtNavBar } from 'taro-ui'
+import { View, ScrollView } from '@tarojs/components'
+import { AtButton, AtNavBar } from 'taro-ui'
 import { observer, inject } from '@tarojs/mobx'
 
 import { findPageList } from './assets/api'
