@@ -62,6 +62,12 @@ class Index extends Component {
       if (result.head.ret === 0) {
         Taro.switchTab({ url: '/pages/index/index' })
         // xxx
+      } else {
+        const msg = result.head.msg
+        Taro.atMessage({
+          message: msg,
+          type: "error"
+        })
       }
     }
   }
