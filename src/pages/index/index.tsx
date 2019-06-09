@@ -3,6 +3,7 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { AtGrid } from 'taro-ui'
 import { FILE_HOST } from '@/consts'
+import { navigateTo } from '@/utils/common'
 
 const styles = require('./index.module.scss')
 
@@ -26,7 +27,10 @@ class Index extends Component {
   handleGridItemClick(item, index, event) {
     switch (index) {
       case 0:
-        Taro.navigateTo({ url: '/pages/resource-manage/pages/types/index' })
+        navigateTo('/pages/index/pages/types/index')
+        break
+      case 1:
+        navigateTo('/pages/index/pages/materials/index')
         break
       default:
         break
@@ -66,9 +70,7 @@ class Index extends Component {
         </View>
 
         <View className={styles.operaWrap}>
-          <View className={[styles.subTitle, styles.opera].join(' ')}>
-            救援管理
-          </View>
+          <View className={[styles.subTitle, styles.opera].join(' ')}>救援管理</View>
           <AtGrid
             mode="square"
             columnNum={3}

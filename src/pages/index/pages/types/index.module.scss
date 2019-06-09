@@ -1,0 +1,78 @@
+@import '../../../../assets/scss/global.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f5f5;
+  .nav {
+    position: relative;
+    .tool {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: $nav-height;
+      line-height: $nav-height;
+      padding: 0 24px;
+      font-size: 28px;
+      z-index: 1010;
+      &.finish {
+        color: $primary-color;
+      }
+    }
+  }
+  .wrap {
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+    .btn {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      border-radius: 0;
+    }
+  }
+}
+
+.emptyText {
+  vertical-align: middle;
+  font-size: 28px;
+  font-weight: 400;
+  color: rgba(153, 153, 153, 1);
+  text-align: center;
+  margin-top: 30%;
+}
+
+.listItem {
+  background: white;
+  border-top: 24px solid $gray-bg-color;
+  .itemContent {
+    padding: 32px;
+    .title {
+      font-size: 32px;
+      font-weight: 500;
+      color: rgba(51, 51, 51, 1);
+    }
+    .remark {
+      font-size: 28px;
+      margin-top: 16px;
+      font-weight: 400;
+      color: rgba(102, 102, 102, 1);
+    }
+  }
+
+  .itemTool {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 24px;
+    border-top: #eeeeee 2px solid;
+    padding: 16px;
+    .btnWrap {
+      &:not(:last-child) {
+        margin-right: 16px;
+      }
+    }
+  }
+}

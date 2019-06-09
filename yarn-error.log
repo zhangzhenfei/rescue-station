@@ -1,8 +1,8 @@
 Arguments: 
-  /Users/zhenfeizhang/.nvm/versions/node/v10.15.3/bin/node /Users/zhenfeizhang/.nvm/versions/node/v10.15.3/bin/yarn
+  /Users/zhenfeizhang/.nvm/versions/node/v10.15.3/bin/node /Users/zhenfeizhang/.nvm/versions/node/v10.15.3/bin/yarn add @tarojs/webpack-runner --silent --no-progress
 
 PATH: 
-  /Users/zhenfeizhang/.nvm/versions/node/v10.15.3/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/zhenfeizhang/.nvm/versions/node/v10.15.3/bin:/usr/local/opt/coreutils/libexec/gnubin
+  /Users/zhenfeizhang/.nvm/versions/node/v10.15.3/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/Users/zhenfeizhang/workspace/rescue-station/node_modules/.bin:/Users/zhenfeizhang/.nvm/versions/node/v10.15.3/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/Users/zhenfeizhang/workspace/rescue-station/node_modules/.bin:/Users/zhenfeizhang/.nvm/versions/node/v10.15.3/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/zhenfeizhang/.nvm/versions/node/v10.15.3/bin:/usr/local/opt/coreutils/libexec/gnubin
 
 Yarn version: 
   1.13.0
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: ENOENT: no such file or directory, copyfile '/Users/zhenfeizhang/Library/Caches/Yarn/v4/npm-is-extglob-2.1.1-a88c02535791f02ed37c76a1b9ea9773c833f8c2/node_modules/is-extglob/README.md' -> '/Users/zhenfeizhang/workspace/rescue-station/node_modules/findup-sync/node_modules/is-extglob/README.md'
+  Error: ENOENT: no such file or directory, copyfile '/Users/zhenfeizhang/Library/Caches/Yarn/v4/npm-is-fullwidth-code-point-1.0.0-ef9e31386f031a7f0d643af82fde50c457ef00cb/node_modules/is-fullwidth-code-point/license' -> '/Users/zhenfeizhang/workspace/rescue-station/node_modules/sass-graph/node_modules/is-fullwidth-code-point/license'
 
 npm manifest: 
   {
@@ -40,29 +40,29 @@ npm manifest:
   	"author": "",
   	"license": "MIT",
   	"dependencies": {
-  		"@tarojs/components": "1.3.0-beta.5",
-  		"@tarojs/mobx": "1.3.0-beta.5",
-  		"@tarojs/mobx-h5": "1.3.0-beta.5",
-  		"@tarojs/mobx-rn": "1.3.0-beta.5",
-  		"@tarojs/rn-runner": "1.3.0-beta.5",
-  		"@tarojs/router": "1.3.0-beta.5",
-  		"@tarojs/taro": "1.3.0-beta.5",
-  		"@tarojs/taro-alipay": "1.3.0-beta.5",
-  		"@tarojs/taro-h5": "1.3.0-beta.5",
-  		"@tarojs/taro-swan": "1.3.0-beta.5",
-  		"@tarojs/taro-tt": "1.3.0-beta.5",
-  		"@tarojs/taro-weapp": "1.3.0-beta.5",
+  		"@tarojs/components": "1.3.0-beta.6",
+  		"@tarojs/mobx": "1.3.0-beta.6",
+  		"@tarojs/mobx-h5": "1.3.0-beta.6",
+  		"@tarojs/mobx-rn": "1.3.0-beta.6",
+  		"@tarojs/rn-runner": "1.3.0-beta.6",
+  		"@tarojs/router": "1.3.0-beta.6",
+  		"@tarojs/taro": "1.3.0-beta.6",
+  		"@tarojs/taro-alipay": "1.3.0-beta.6",
+  		"@tarojs/taro-h5": "1.3.0-beta.6",
+  		"@tarojs/taro-swan": "1.3.0-beta.6",
+  		"@tarojs/taro-tt": "1.3.0-beta.6",
+  		"@tarojs/taro-weapp": "1.3.0-beta.6",
   		"mobx": "4.8.0",
   		"nerv-devtools": "^1.4.0-beta.3",
   		"nervjs": "^1.4.0-beta.3"
   	},
   	"devDependencies": {
-  		"@tarojs/async-await": "1.3.0-beta.5",
-  		"@tarojs/plugin-babel": "1.3.0-beta.5",
-  		"@tarojs/plugin-csso": "1.3.0-beta.5",
-  		"@tarojs/plugin-sass": "1.3.0-beta.5",
-  		"@tarojs/plugin-uglifyjs": "1.3.0-beta.5",
-  		"@tarojs/webpack-runner": "1.3.0-beta.5",
+  		"@tarojs/async-await": "1.3.0-beta.6",
+  		"@tarojs/plugin-babel": "1.3.0-beta.6",
+  		"@tarojs/plugin-csso": "1.3.0-beta.6",
+  		"@tarojs/plugin-sass": "1.3.0-beta.6",
+  		"@tarojs/plugin-uglifyjs": "1.3.0-beta.6",
+  		"@tarojs/webpack-runner": "1.3.0-beta.6",
   		"@types/react": "16.3.14",
   		"@types/webpack-env": "^1.13.6",
   		"@typescript-eslint/parser": "^1.6.0",
@@ -73,10 +73,10 @@ npm manifest:
   		"babel-plugin-transform-object-rest-spread": "^6.26.0",
   		"babel-preset-env": "^1.6.1",
   		"eslint": "^5.16.0",
-  		"eslint-config-taro": "1.3.0-beta.5",
+  		"eslint-config-taro": "1.3.0-beta.6",
   		"eslint-plugin-import": "^2.12.0",
   		"eslint-plugin-react": "^7.8.2",
-  		"eslint-plugin-taro": "1.3.0-beta.5",
+  		"eslint-plugin-taro": "1.3.0-beta.6",
   		"gulp": "^3.9.0",
   		"gulp-sftp": "^0.1.5",
   		"stylelint": "9.3.0",

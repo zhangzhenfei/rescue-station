@@ -25,8 +25,8 @@ const config = {
       plugins: ['transform-decorators-legacy', 'transform-class-properties', 'transform-object-rest-spread']
     },
     sass: {
-      resource: path.resolve(__dirname, '../src', 'assets/scss/global.scss'),
-      projectDirectory: path.resolve(__dirname, '../src')
+      resource: path.resolve(__dirname, '..', 'src/assets/scss/global.scss'),
+      projectDirectory: path.resolve(__dirname, '..')
     }
   },
   defineConstants: {},

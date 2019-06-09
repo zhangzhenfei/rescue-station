@@ -5,6 +5,7 @@ import Index from './pages/splash'
 import '@/assets/scss/custom-variables.scss'
 
 import counterStore from './store/counter'
+import indexStore from './store/index'
 
 import '@tarojs/async-await'
 import './app.scss'
@@ -16,7 +17,8 @@ if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5') {
 }
 
 const store = {
-  counterStore
+  counterStore,
+  indexStore
 }
 
 class App extends Component {
@@ -31,6 +33,10 @@ class App extends Component {
     pages: [
       'pages/login/index', // 登录
       'pages/index/index', // 主页
+      'pages/index/pages/types/index', // 物资种类管理
+      'pages/index/pages/types-edit/index', // 物资新增/编辑
+      'pages/index/pages/materials/index', // 物资管理
+      'pages/index/pages/materials-edit/index', // 物资新增/编辑
       'pages/cabinet/index', // 机柜
       'pages/cabinet/pages/detail/index', // 机柜详情
       'pages/cabinet/pages/materials/index', // 物资列表
@@ -41,7 +47,6 @@ class App extends Component {
       'pages/cabinet/pages/material-batchs/index', // 物资批次列表
       'pages/map/index', // 地图
       'pages/mine/index', // 我的
-      'pages/resource/pages/types/index', // 资源类型
       'pages/splash/index' // 欢迎页
     ],
     window: {

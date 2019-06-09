@@ -1,4 +1,5 @@
-export const API_HOST = 'http://rescue.sadais.com'
+// 根据当前环境判断是否使用跨域代理
+export const API_HOST = process.env.NODE_ENV === 'development' ? 'rescue-api' : 'http://rescue.sadais.com'
 export const FILE_HOST = 'http://m.sadais.com/rescue/img/app_h5/'
 
 // header头信息
