@@ -12,13 +12,15 @@
     $item-height: 80px;
     white-space: nowrap;
     border-top: $border;
-    height: 600px;
-    padding-bottom: 150px;
+    height: 320px; // 展现4个item的高度
+    overflow: auto; // 超出范围 则滚动
     .list {
       display: inline-block;
-      width: 180px;
+      width: 25%;
+      max-width: 200px;
       height: 100%;
       border-right: $border;
+      vertical-align: top;
     }
     .item {
       height: $item-height;
@@ -33,10 +35,6 @@
     }
   }
   .btns {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
     display: flex;
     border-top: $border;
     .btn {

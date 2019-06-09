@@ -4,6 +4,7 @@ import { View } from '@tarojs/components'
 import { AtGrid } from 'taro-ui'
 import { FILE_HOST } from '@/consts'
 import { navigateTo } from '@/utils/common'
+import { apiGetMsgColumns, IIndexState } from './assets/api'
 
 const styles = require('./index.module.scss')
 
@@ -11,8 +12,12 @@ class Index extends Component {
   config: Config = {
     navigationBarTitleText: '首页'
   }
-
-  componentWillMount() {}
+  state: IIndexState = {
+    msgColumns: []
+  }
+  componentWillMount() {
+    this.loadMsgColumns()
+  }
 
   componentWillReact() {}
 
@@ -24,6 +29,14 @@ class Index extends Component {
 
   componentDidHide() {}
 
+  async loadMsgColumns() {
+    const data = await apiGetMsgColumns()
+    if (data.head.ret === 0) {
+      this.setState({
+        msgColumns: data.data
+      })
+    }
+  }
   handleGridItemClick(item, index, event) {
     switch (index) {
       case 0:
@@ -37,6 +50,32 @@ class Index extends Component {
     }
   }
 
+  renderMsgColumns() {
+    const data = this.state.msgColumns.map(val => ({
+      image: val.pic,
+      value: val.name
+    }))
+    const dom = (
+      <div className={styles.msgCols}>
+        {this.state.msgColumns.map(val => {
+          return (
+            <div className={styles.col}>
+              <div className={styles.wrapper}>
+                <div className={styles.imgDiv}>
+                  <img src={val.pic} />
+                  <span className={styles.redDot}>{val.count}</span>
+                </div>
+                <span>{val.name}</span>
+              </div>
+            </div>
+          )
+        })}
+        {/* <AtGrid mode="square" columnNum={3} hasBorder={false} data={data} /> */}
+      </div>
+    )
+    return dom
+  }
+
   render() {
     return (
       <View className={[styles.container, 'container'].join(' ')}>
@@ -47,25 +86,7 @@ class Index extends Component {
         <View className={styles.infoWrap}>
           <View className={styles.info}>
             <View className={styles.subTitle}>紧急消息</View>
-            <AtGrid
-              mode="square"
-              columnNum={3}
-              hasBorder={false}
-              data={[
-                {
-                  image: FILE_HOST + 'home_ic_siren.png',
-                  value: '机柜警报'
-                },
-                {
-                  image: FILE_HOST + 'home_ic_rescuecall.png',
-                  value: '救援电话'
-                },
-                {
-                  image: FILE_HOST + 'home_ic_todolist.png',
-                  value: '督办事项'
-                }
-              ]}
-            />
+            {this.renderMsgColumns()}
           </View>
         </View>
 

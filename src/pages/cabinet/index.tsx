@@ -2,13 +2,16 @@ import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text, Image } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
-
+import { apiGetAgencyList, apiGetDataOnAgency, IAgency, ICabinet } from './assets/api'
 import AreaSelect from './components/area-select/index'
 
 const styles = require('./index.module.scss')
 
 interface IState {
   showAreaSelect: false
+  agencies: IAgency[]
+  cabinets: ICabinet[]
+  selectAgency?: IAgency
 }
 
 type PageStateProps = {
@@ -39,10 +42,14 @@ class Index extends Component {
   }
 
   state: IState = {
-    showAreaSelect: false
+    showAreaSelect: false,
+    agencies: [],
+    cabinets: []
   }
 
-  componentWillMount() {}
+  componentWillMount() {
+    this.loadAgencies()
+  }
 
   componentWillReact() {
     console.log('componentWillReact')
@@ -56,6 +63,15 @@ class Index extends Component {
 
   componentDidHide() {}
 
+  async loadAgencies() {
+    const data = await apiGetAgencyList()
+    if (data.head.ret === 0) {
+      this.setState({
+        agencies: data.data
+      })
+    }
+  }
+
   handleClickOrgBtn() {
     this.setState({ showAreaSelect: true })
   }
@@ -64,8 +80,20 @@ class Index extends Component {
     Taro.navigateTo({ url: '/pages/cabinet/pages/detail/index' })
   }
 
+  async selectAgency(agency: IAgency) {
+    const data = await apiGetDataOnAgency(agency.id)
+    if (data.head.ret === 0) {
+      const { fcList = [] } = data.data
+      this.setState({
+        cabinets: fcList,
+        selectAgency: agency
+      })
+    }
+  }
+
   render() {
-    const { showAreaSelect } = this.state
+    const { showAreaSelect, selectAgency } = this.state
+    const agencyName = (selectAgency && selectAgency.name) || '请选择'
     return (
       <View className="container">
         <View className={styles.header}>
@@ -73,22 +101,22 @@ class Index extends Component {
           <View className={styles.headerOrg}>
             <Text>机构：</Text>
             <Text className={styles.headerOrgBtn} onClick={this.handleClickOrgBtn.bind(this)}>
-              全部
+              {agencyName}
             </Text>
           </View>
         </View>
-        <AreaSelect show={showAreaSelect} />
+        <AreaSelect show={showAreaSelect} agencies={this.state.agencies} onConfirm={this.selectAgency.bind(this)} />
         <View className={styles.content}>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map(i => {
+          {this.state.cabinets.map(i => {
             return (
-              <View className={styles.listItem} key={i} onClick={this.navigateToDetail.bind(this)}>
-                <Image mode="aspectFit" lazyLoad={true} className={styles.img} />
+              <View className={styles.listItem} key={i.id} onClick={this.navigateToDetail.bind(this)}>
+                <Image mode="aspectFill" lazyLoad={true} className={styles.img} src={i.img} />
                 <View className={styles.listContent}>
                   <View>
-                    <View className={styles.listTitle}>朝阳公园消防柜A</View>
-                    <View className={styles.listDesc}>AC132423</View>
+                    <View className={styles.listTitle}>{i.name}</View>
+                    <View className={styles.listDesc}>{i.code}</View>
                   </View>
-                  <View className={styles.address}>北京朝阳区望京SOHO</View>
+                  <View className={styles.address}>{i.address}</View>
                 </View>
               </View>
             )
