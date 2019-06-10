@@ -11,7 +11,7 @@ interface IState {
   showAreaSelect: false
   agencies: IAgency[]
   cabinets: ICabinet[]
-  selectAgency?: IAgency
+  path: string
 }
 
 type PageStateProps = {
@@ -44,7 +44,8 @@ class Index extends Component {
   state: IState = {
     showAreaSelect: false,
     agencies: [],
-    cabinets: []
+    cabinets: [],
+    path: ''
   }
 
   componentWillMount() {
@@ -80,20 +81,27 @@ class Index extends Component {
     Taro.navigateTo({ url: '/pages/cabinet/pages/detail/index' })
   }
 
-  async selectAgency(agency: IAgency) {
-    const data = await apiGetDataOnAgency(agency.id)
-    if (data.head.ret === 0) {
-      const { fcList = [] } = data.data
+  async selectAgency(agency?: IAgency, path: string = '') {
+    if (agency) {
+      const data = await apiGetDataOnAgency(agency.id)
+      if (data.head.ret === 0) {
+        const { fcList = [] } = data.data
+        this.setState({
+          cabinets: fcList,
+          path
+        })
+      }
+    } else {
       this.setState({
-        cabinets: fcList,
-        selectAgency: agency
+        cabinets: [],
+        path: ''
       })
     }
   }
 
   render() {
-    const { showAreaSelect, selectAgency } = this.state
-    const agencyName = (selectAgency && selectAgency.name) || '请选择'
+    const { showAreaSelect, path } = this.state
+    const agencyName = path || '请选择'
     return (
       <View className="container">
         <View className={styles.header}>

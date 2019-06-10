@@ -13,6 +13,7 @@ interface IState {
   agencies: IAgency[]
   selectAgency?: IAgency
   cols: Array<Array<IAgency>>
+  selectPath: IAgency[]
 }
 
 class AreaSelect extends Component<IAreaSelect> {
@@ -22,7 +23,8 @@ class AreaSelect extends Component<IAreaSelect> {
       animShow: false,
       _show: props.show,
       agencies: props.agencies,
-      selectAgency: (props.agencies && props.agencies.length > 0 && props.agencies[0]) || undefined,
+      selectAgency: undefined,
+      selectPath: [],
       cols: []
     }
   }
@@ -45,60 +47,59 @@ class AreaSelect extends Component<IAreaSelect> {
     _show: false,
     agencies: [],
     selectAgency: undefined,
+    selectPath: [],
     cols: []
   }
   // 临时辅助的栈
   stack: Array<Array<IAgency>> = []
+  pathStack: IAgency[] = []
 
-  componentWillReceiveProps(nextProps) {
+  async asyncSetState(state: any) {
+    const self = this
+    return new Promise(r => {
+      self.setState(state, r)
+    })
+  }
+
+  async componentWillReceiveProps(nextProps) {
     const { show, agencies } = nextProps
     if (show !== this.state._show) {
       show ? this.animShow() : this.animHide()
     }
     if (agencies !== this.state.agencies) {
-      const self = this
-      this.setState(
-        {
-          agencies: [...agencies]
-        },
-        () => {
-          setTimeout(() => {
-            self.reloadCols(self.state.agencies)
-          }, 0)
-        }
-      )
+      await this.asyncSetState({
+        agencies: [...agencies]
+      })
+      this.reloadCols(this.state.agencies)
     }
   }
 
-  reloadCols(items: IAgency[] = []) {
-    // 下面setTimeout的原因是为了fix setState无效的问题
-    const self = this
+  /**
+   * 根据this.state.selectAgency，计算：
+   * 1. UI上应该显示多少列，及其每列的数据 存储到this.state.cols:Array<Array<IAgency>>
+   * 2. 从根节点到被点击节点这条路径上所有节点 存储到 this.state.selectPath
+   *
+   * @params items 接口返回的机构列表 IAgency是一个递归结构
+   */
+  async reloadCols(items: IAgency[] = []) {
     this.stack = []
+    this.pathStack = []
     const bFind = this.recursiveFind(items)
-
     if (!bFind && items.length > 0) {
-      // 如果没有找到 则说明selectId不对 默认选中第一个机构
-      this.setState(
-        {
-          selectAgency: items[0]
-        },
-        () => {
-          setTimeout(() => {
-            self.reloadCols(items)
-          }, 0)
-        }
-      )
-    } else {
-      setTimeout(() => {
-        self.setState(
-          {
-            cols: self.stack
-          },
-          () => {
-            self.stack = []
-          }
-        )
-      }, 0)
+      // 没有找到 则重置回显示第一列，即所有根节点，且无选中状态
+      await this.asyncSetState({
+        cols: [items],
+        selectPath: []
+      })
+    } else if (bFind) {
+      // selectPath记录了从根到点击的机构所构成的路径上的节点ID，用逗号分隔开
+      // 用以显示的时候 高亮这条路径
+      await this.asyncSetState({
+        cols: this.stack,
+        selectPath: this.pathStack
+      })
+      this.stack = []
+      this.pathStack = []
     }
   }
 
@@ -107,6 +108,7 @@ class AreaSelect extends Component<IAreaSelect> {
     const curId = this.state.selectAgency && this.state.selectAgency.id
     let bFind = false
     for (const item of items) {
+      this.pathStack.push(item)
       if (item.id === curId) {
         // 如果在当前这一层找到选中的机构 则把当前机构的下级列表 也入栈保存
         bFind = true
@@ -122,6 +124,7 @@ class AreaSelect extends Component<IAreaSelect> {
           break
         }
       }
+      this.pathStack.pop()
     }
     if (!bFind) {
       this.stack.pop()
@@ -157,24 +160,16 @@ class AreaSelect extends Component<IAreaSelect> {
     }, 200)
   }
 
-  onChooseAgency(agency, e = undefined) {
+  async onChooseAgency(agency, e = undefined) {
     if (e) {
       e.preventDefault()
     }
-    const self = this
-    this.setState(
-      {
-        selectAgency: agency
-      },
-      () => {
-        setTimeout(() => {
-          self.reloadCols(self.state.agencies)
-        }, 0)
-        if (self.state.selectAgency) {
-          self.props.onConfirm && self.props.onConfirm(self.state.selectAgency)
-        }
-      }
-    )
+    await this.asyncSetState({
+      selectAgency: agency
+    })
+    await this.reloadCols(this.state.agencies)
+    const path = this.state.selectPath.map(val => val.name).join('/')
+    this.props.onConfirm && this.props.onConfirm(this.state.selectAgency, path)
   }
 
   onConfirm(e) {
@@ -191,22 +186,18 @@ class AreaSelect extends Component<IAreaSelect> {
 
   onReset(e) {
     e.preventDefault()
-
-    this.setState((prev: IState) => {
-      const selectAgency = (prev.agencies && prev.agencies.length > 0 && prev.agencies[0]) || undefined
-      if (selectAgency) {
-        this.onChooseAgency(selectAgency)
-      }
-      return {
-        selectAgency
-      }
-    })
+    this.onChooseAgency(undefined)
   }
+
+  isActive(agency: IAgency) {
+    const flag = this.state.selectPath.some(i => i.id === agency.id)
+    return flag ? styles.active : ''
+  }
+
   render() {
     const { mask } = this.props
-    const { animShow, _show, selectAgency } = this.state
+    const { animShow, _show } = this.state
 
-    const agencyId = selectAgency && selectAgency.id
     const maskStyle = {
       display: mask ? 'block' : 'none',
       opacity: animShow ? 1 : 0
@@ -230,11 +221,10 @@ class AreaSelect extends Component<IAreaSelect> {
                 return (
                   <View className={styles.list}>
                     {col.map(agency => {
-                      const isActive = agency.id === agencyId ? styles.active : ''
                       return (
                         <View
                           key={agency.id}
-                          className={[styles.item, isActive].join(' ')}
+                          className={[styles.item, this.isActive(agency)].join(' ')}
                           onClick={this.onChooseAgency.bind(this, agency)}
                         >
                           {agency.name}

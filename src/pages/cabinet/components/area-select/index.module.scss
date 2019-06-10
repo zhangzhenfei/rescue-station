@@ -14,6 +14,7 @@
     border-top: $border;
     height: 320px; // 展现4个item的高度
     overflow: auto; // 超出范围 则滚动
+    transition: offsetLeft 1s;
     .list {
       display: inline-block;
       width: 25%;

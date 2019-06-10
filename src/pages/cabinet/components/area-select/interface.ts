@@ -8,7 +8,7 @@ export interface IAreaSelect {
   mask: boolean
   agencies: IAgency[]
   onClose?: () => void
-  onConfirm?: (agencyId: IAgency) => void
+  onConfirm?: (agency?: IAgency, path?: string) => void
 }
 
 declare const AreaSelect: ComponentType<IAreaSelect>
