@@ -41,7 +41,7 @@ class Index extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    navigationBarTitleText: '物资管理'
+    navigationBarTitleText: '请选择种类'
   }
 
   public state: IState = {
@@ -100,7 +100,7 @@ class Index extends Component {
         <View className={styles.nav}>
           <AtNavBar
             color="#000"
-            title="物资管理"
+            title="请选择种类"
             leftIconType="chevron-left"
             onClickLeftIcon={this.navigateBack.bind(this)}
           />

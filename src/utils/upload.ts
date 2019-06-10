@@ -1,9 +1,6 @@
-import Taro from '@tarojs/taro'
 import request from '@/utils/request'
-import {log} from '@/utils/common'
-import OSS from 'ali-oss';
-
-const OSS_OPTIONS_KEY = 'OSS_OPTIONS_KEY';
+import { log } from '@/utils/common'
+import OSS from 'ali-oss'
 
 let client = null
 let objectName = ''
@@ -24,24 +21,26 @@ export const getOSSOptionFromServer = async () => {
   return {}
 }
 
-export const initClient = async () {
-  let options = Taro.getStorageSync(OSS_OPTIONS_KEY);
-  if (!options) {
-    options = await getOSSOptionFromServer();
-    Taro.setStorageSync(OSS_OPTIONS_KEY, options);
-  }
-
-  if (options) {
-    log('初始化阿里云OSS客户端')
-    objectName = options.objectName;
-    client = new OSS(options);
-  }
+export const initClient = async () => {
+  const options = await getOSSOptionFromServer()
+  log('初始化阿里云OSS客户端')
+  objectName = options.objectName
+  return new OSS(options)
 }
 
-export const uploadFile = () => {
-
-  if(!client) {
-    initClient()
+export const uploadFile = async file => {
+  if (!client) {
+    client = await initClient()
   }
-
+  const currentDate = new Date().getTime()
+  var splits = file.type.split('/')
+  const name = `${objectName}${currentDate}.${splits[splits.length - 1]}`
+  try {
+    const blob = await request.getBlob(file.path)
+    const { url } = await client.put(name, blob)
+    return url
+  } catch (error) {
+    client = null
+    return await uploadFile(file)
+  }
 }
