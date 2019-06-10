@@ -12,6 +12,10 @@ export const apiGetCabinetDetail = async id => {
  * @param params 发送的参数
  */
 export const apiSendMqtt = async (params: IMqttCommand) => {
-  const data = await request.post('/api/lt/rescue/v1/mqtt/sendinstruction', params)
+  const newParams: any = { ...params }
+  if (newParams.jsonStr) {
+    newParams.jsonStr = JSON.stringify(newParams.jsonStr)
+  }
+  const data = await request.post('/api/lt/rescue/v1/mqtt/sendinstruction', newParams)
   return data
 }
