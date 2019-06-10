@@ -10,6 +10,6 @@ export const findPageList = async pageNo => {
     pageNo,
     pageSize: 20
   }
-  const data = await request.post('/api/lt/rescue/v1/ms/findpagelist', params)
+  const data = await request.post('/api/lt/rescue/v1/mt/findpagelist', params)
   return data
 }
