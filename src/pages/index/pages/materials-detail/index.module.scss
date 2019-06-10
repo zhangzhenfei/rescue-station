@@ -1,0 +1,36 @@
+@import '../../../../assets/scss/global.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f5f5;
+  .wrap {
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+    margin-top: 24px;
+    .item {
+      position: relative;
+      padding: 34px 42px;
+      background: #ffffff;
+      font-size: 28px;
+      color: #666666;
+      .name {
+        font-size: 32px;
+        color: #333333;
+        padding-bottom: 32px;
+      }
+      .info {
+        padding: 8px 0;
+      }
+      .img {
+        position: absolute;
+        top: 32px;
+        right: 32px;
+        width: 150px;
+        height: 150px;
+        border-radius: 8px;
+      }
+    }
+  }
+}

@@ -17,7 +17,9 @@ interface IState {
 type PageStateProps = {
   indexStore: {
     editMaterial: any
+    selectedClass: any
     setEditMaterial: Function
+    setSelectedClass: Function
   }
 }
 
@@ -132,6 +134,7 @@ class Index extends Component {
                   <AtInput
                     name="mtId"
                     type="text"
+                    value={editMaterial.typeName}
                     placeholder="请选择"
                     editable={false}
                     onClick={this.handleClassSelect.bind(this)}

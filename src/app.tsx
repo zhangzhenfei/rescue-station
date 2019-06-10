@@ -36,6 +36,7 @@ class App extends Component {
       'pages/index/pages/types/index', // 物资种类管理
       'pages/index/pages/types-edit/index', // 物资新增/编辑
       'pages/index/pages/materials/index', // 物资管理
+      'pages/index/pages/materials-detail/index', // 物资详情
       'pages/index/pages/materials-edit/index', // 物资新增/编辑
       'pages/index/pages/materials-class/index', // 物资种类选择
       'pages/cabinet/index', // 机柜

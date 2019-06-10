@@ -93,6 +93,11 @@ class Index extends Component {
     navigateTo('/pages/index/pages/materials-edit/index', { isEdit: item ? 1 : 0 })
   }
 
+  handleViewDetail(item) {
+    this.props.indexStore.setEditMaterial(item)
+    navigateTo('/pages/index/pages/materials-detail/index')
+  }
+
   render() {
     const { isEdit, materials } = this.state
     return (
@@ -116,7 +121,7 @@ class Index extends Component {
             {materials.map(material => {
               return (
                 <View className={styles.listItem} key={material.id}>
-                  <View className={styles.mainContent}>
+                  <View className={styles.mainContent} onClick={this.handleViewDetail.bind(this, material)}>
                     <Image mode="scaleToFill" src={material.img} lazyLoad={true} className={styles.img} />
                     <View className={styles.listContent}>
                       <View>

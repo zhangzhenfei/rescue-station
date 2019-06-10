@@ -27,6 +27,9 @@
       flex-direction: column;
       justify-content: center;
       padding-left: 32px;
+      &.selected {
+        background: url($FILE_HOST+'common_ic_choice.png') no-repeat 95% center/ 40px auto;
+      }
     }
 
     .listTitle {
