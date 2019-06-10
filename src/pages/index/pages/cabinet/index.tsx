@@ -1,8 +1,10 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Text, Image } from '@tarojs/components'
+import { View, Image } from '@tarojs/components'
+import { AtNavBar } from 'taro-ui'
 import { observer, inject } from '@tarojs/mobx'
 import { apiGetAgencyList, apiGetDataOnAgency, IAgency, ICabinet } from './assets/api'
+import { navigateBack } from '@/utils/common'
 
 const styles = require('./index.module.scss')
 
@@ -37,7 +39,7 @@ class Index extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '机柜管理'
   }
 
   state: IState = {
@@ -103,15 +105,7 @@ class Index extends Component {
     const agencyName = path || '请选择'
     return (
       <View className="container">
-        <View className={styles.header}>
-          <View className={styles.headerTitle}>我的机柜</View>
-          <View className={styles.headerOrg}>
-            <Text>机构：</Text>
-            <Text className={styles.headerOrgBtn} onClick={this.handleClickOrgBtn.bind(this)}>
-              {agencyName}
-            </Text>
-          </View>
-        </View>
+        <AtNavBar color="#000" title="机柜管理" leftIconType="chevron-left" onClickLeftIcon={navigateBack.bind(this)} />
         <View className={styles.content}>
           {this.state.cabinets.map(i => {
             return (
