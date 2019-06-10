@@ -32,8 +32,7 @@ class Modal extends Component<IModal> {
     mask: true,
     modalType: ModalType.WARN,
     onHide: () => {},
-    onOpen: () => {},
-    onClose: () => {}
+    onClick: () => {}
   }
 
   state: IState = {
@@ -54,7 +53,7 @@ class Modal extends Component<IModal> {
 
   onHide() {
     this.setState({ _show: false }, () => {
-      this.props.onClose && this.props.onClose()
+      this.props.onHide && this.props.onHide()
     })
   }
 
@@ -127,7 +126,12 @@ class Modal extends Component<IModal> {
               {titleMap[modalType].btns.map((btn, index) => {
                 return (
                   <View className={styles.btn} key={btn}>
-                    <AtButton type={index === 0 ? 'primary' : 'secondary'}>{btn}</AtButton>
+                    <AtButton
+                      type={index === 0 ? 'primary' : 'secondary'}
+                      onClick={this.onClick.bind(this, modalType, btn)}
+                    >
+                      {btn}
+                    </AtButton>
                   </View>
                 )
               })}
@@ -136,6 +140,12 @@ class Modal extends Component<IModal> {
         </View>
       )
     )
+  }
+
+  onClick(type, title, e) {
+    e.preventDefault()
+    let isOn = title.indexOf('开') !== -1
+    this.props.onClick(type, isOn)
   }
 }
 

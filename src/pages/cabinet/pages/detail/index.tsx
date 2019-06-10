@@ -3,11 +3,12 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 
-import { AtNavBar, AtGrid } from 'taro-ui'
+import { AtNavBar, AtGrid, AtMessage } from 'taro-ui'
 import { FILE_HOST } from '@/consts'
-
+import { apiGetCabinetDetail, apiSendMqtt, ICabinetDetail, IMqttCommand } from './api'
 import Modal from './components/modal'
 import { ModalType } from './components/modal/interface'
+import { EMqttCommandType } from './interface'
 
 const styles = require('./index.module.scss')
 
@@ -29,7 +30,9 @@ interface IState {
     show: boolean
     type: ModalType
   }
+  detail?: ICabinetDetail
 }
+
 const carbinetOpera = [
   {
     image: FILE_HOST + 'guizi_ic_in.png',
@@ -76,10 +79,13 @@ class Index extends Component {
     currentModal: {
       show: false,
       type: ModalType.LOCK
-    }
+    },
+    detail: undefined
   }
 
-  componentWillMount() {}
+  componentWillMount() {
+    this.loadDetail()
+  }
 
   componentWillReact() {
     console.log('componentWillReact')
@@ -93,6 +99,17 @@ class Index extends Component {
 
   componentDidHide() {}
 
+  async loadDetail() {
+    const { params: { id = undefined } = {} } = this.$router
+    if (id) {
+      const data = await apiGetCabinetDetail(id)
+      if (data.head.ret === 0) {
+        this.setState({
+          detail: data.data
+        })
+      }
+    }
+  }
   increment = () => {
     const { counterStore } = this.props
     counterStore.increment()
@@ -119,26 +136,53 @@ class Index extends Component {
     Taro.navigateTo({ url: item.url })
   }
 
+  deviceStatus(detail: ICabinetDetail) {
+    const s = detail.deviceStatusInfo || {}
+    const bGood = (s && s.alarmHardStatus + s.controlHardStatus + s.lockHardStatus === 3) || false
+
+    const isLedOn = s.ledStatus === 1
+    const isWarnOn = s.alarmStatus === 1
+    const isLockOn = s.lockStatus === 1
+    return [
+      {
+        title: bGood ? '设备正常' : '设备异常',
+        style: bGood ? styles.green : styles.red
+      },
+      {
+        title: isLedOn ? '屏幕开机' : '屏幕休眠',
+        style: isLedOn ? styles.green : styles.grey
+      },
+      {
+        title: isWarnOn ? '警报开启' : '警报关闭',
+        style: isWarnOn ? styles.red : styles.grey
+      },
+      {
+        title: isLockOn ? '门锁开启' : '门锁关闭',
+        style: isLockOn ? styles.red : styles.grey
+      }
+    ]
+  }
   render() {
-    const { currentModal } = this.state
+    const { currentModal, detail = {} as ICabinetDetail } = this.state
+    const devStatus = this.deviceStatus(detail)
     return (
       <View className={[styles.container, 'container'].join(' ')}>
+        <AtMessage />
         <AtNavBar
           color="#000"
           fixed={true}
-          title="朝阳公园消防柜A"
+          title={detail.name}
           leftIconType="chevron-left"
           onClickLeftIcon={this.navigateBack.bind(this)}
         />
         <View className={styles.header}>
-          <View className={styles.title}>朝阳公园消防柜A</View>
-          <View className={styles.desc}>AC132423</View>
-          <View className={styles.address}>北京朝阳区望京SOHO</View>
+          <View className={styles.title}>{detail.name}</View>
+          <View className={styles.desc}>{detail.code}</View>
+          <View className={styles.address}>{detail.address}</View>
           <View className={styles.states}>
-            <View className={styles.state}>设备正常</View>
-            <View className={[styles.state, styles.red].join(' ')}>屏幕开机</View>
-            <View className={[styles.state, styles.grey].join(' ')}>警报关闭</View>
-            <View className={styles.state}>门锁开启</View>
+            {devStatus.map(i => (
+              <View className={[styles.state, i.style].join(' ')}>{i.title}</View>
+            ))}
           </View>
         </View>
         <View className={styles.ctrl}>
@@ -181,9 +225,43 @@ class Index extends Component {
             onClick={this.handleCabinetClick.bind(this)}
           />
         </View>
-        <Modal show={currentModal.show} modalType={currentModal.type} />
+        <Modal show={currentModal.show} modalType={currentModal.type} onClick={this.onCommand} />
       </View>
     )
+  }
+
+  onCommand = async (type: ModalType, isOn) => {
+    const { params: { id = undefined } = {} } = this.$router
+    if (id) {
+      let commandType
+      if (type === ModalType.WARN) {
+        commandType = isOn ? EMqttCommandType.openWarn : EMqttCommandType.closeWarn
+      } else if (type === ModalType.SCREEN) {
+        commandType = EMqttCommandType.led
+      } else if (type === ModalType.LOCK) {
+        commandType = EMqttCommandType.door
+      }
+      const param: IMqttCommand = {
+        type: commandType,
+        fcId: id,
+        jsonStr: {
+          status: isOn
+        }
+      }
+      const data = await apiSendMqtt(param)
+      const { head: { ret = -1, msg = '发送失败' } = {} } = data
+      if (ret == 0) {
+        Taro.atMessage({
+          message: '成功',
+          type: 'success'
+        })
+      } else {
+        Taro.atMessage({
+          message: msg,
+          type: 'success'
+        })
+      }
+    }
   }
 }
 
