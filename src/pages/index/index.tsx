@@ -45,6 +45,9 @@ class Index extends Component {
       case 1:
         navigateTo('/pages/index/pages/materials/index')
         break
+      case 2:
+        navigateTo('/pages/index/pages/cabinet/index')
+        break
       default:
         break
     }

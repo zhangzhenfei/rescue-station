@@ -2,13 +2,13 @@ import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, ScrollView, Image } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
-import { log, navigateTo, navigateBack } from '@/utils/common'
+import { log, navigateBack } from '@/utils/common'
 
 import { findPageList } from './api'
 import { IMaterials } from './interface'
 import { IListResult } from '@/interfaces/index'
 
-import { AtNavBar, AtButton } from 'taro-ui'
+import { AtNavBar } from 'taro-ui'
 
 const styles = require('./index.module.scss')
 
@@ -79,37 +79,47 @@ class Index extends Component {
     }
   }
 
-  navigateBack = () => {
-    navigateBack()
-  }
-
   handleToggleStatus() {
     this.setState({ isEdit: !this.state.isEdit })
   }
 
-  handleNewOrEdit(item) {
-    this.props.indexStore.setEditMaterial(item || {})
-    this.setState({ isEdit: false })
-    navigateTo('/pages/index/pages/materials-edit/index', { isEdit: item ? 1 : 0 })
+  handleSelectClass(material) {
+    this.props.indexStore.setEditMaterial({
+      ...this.props.indexStore.editMaterial,
+      mtId: material.id,
+      typeName: material.name
+    })
+    navigateBack()
   }
 
   render() {
-    const { isEdit, materials } = this.state
+    const {
+      indexStore: { editMaterial }
+    } = this.props
+    const { materials } = this.state
     return (
       <View className={[styles.container, 'container'].join(' ')}>
         <AtNavBar
           color="#000"
           title="请选择种类"
           leftIconType="chevron-left"
-          onClickLeftIcon={this.navigateBack.bind(this)}
+          onClickLeftIcon={navigateBack.bind(this)}
         />
         <View className={styles.wrap}>
           <ScrollView className="scroll-container" scrollY={true}>
             {materials.map(material => {
               return (
-                <View className={styles.listItem} key={material.id}>
+                <View
+                  className={styles.listItem}
+                  key={material.id}
+                  onClick={this.handleSelectClass.bind(this, material)}
+                >
                   <View className={styles.mainContent}>
-                    <View className={styles.listContent}>
+                    <View
+                      className={[styles.listContent, editMaterial.mtId === material.id ? styles.selected : ''].join(
+                        ' '
+                      )}
+                    >
                       <View className={styles.listTitle}>{material.name}</View>
                       <View className={styles.listDesc}>{material.remark}</View>
                     </View>
