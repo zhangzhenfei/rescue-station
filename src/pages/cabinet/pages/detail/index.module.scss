@@ -32,31 +32,36 @@
     margin-top: 24px;
     height: 98px;
     .state {
-      position: relative;
       flex: 1;
       font-size: 24px;
       color: #333333;
-      &::after {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &::before {
         content: '';
-        position: absolute;
-        left: 0;
-        top: 50%;
+        display: inline-block;
+        margin-right: 8px;
         width: 24px;
         height: 24px;
         background: rgba(55, 189, 47, 1);
         box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.17);
         border: 3px solid rgba(255, 255, 255, 1);
         border-radius: 50%;
-        transform: translateY(-50%);
       }
       &.grey {
-        &::after {
+        &::before {
           background: #999999;
         }
       }
       &.red {
-        &::after {
+        &::before {
           background: $primary-color;
+        }
+      }
+      &.green {
+        &::before {
+          background: #37bd2f;
         }
       }
     }

@@ -3,8 +3,7 @@ export interface IModal {
   mask: boolean
   modalType: ModalType
   onHide: () => void
-  onOpen: () => void
-  onClose: () => void
+  onClick: (type: ModalType, isOn: boolean) => void
 }
 
 export enum ModalType {

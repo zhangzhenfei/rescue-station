@@ -77,8 +77,8 @@ class Index extends Component {
     this.setState({ showAreaSelect: true })
   }
 
-  navigateToDetail() {
-    Taro.navigateTo({ url: '/pages/cabinet/pages/detail/index' })
+  navigateToDetail(cabinetId) {
+    Taro.navigateTo({ url: `/pages/cabinet/pages/detail/index?id=${cabinetId}` })
   }
 
   async selectAgency(agency?: IAgency, path: string = '') {
@@ -117,7 +117,7 @@ class Index extends Component {
         <View className={styles.content}>
           {this.state.cabinets.map(i => {
             return (
-              <View className={styles.listItem} key={i.id} onClick={this.navigateToDetail.bind(this)}>
+              <View className={styles.listItem} key={i.id} onClick={this.navigateToDetail.bind(this, i.id)}>
                 <Image mode="aspectFill" lazyLoad={true} className={styles.img} src={i.img} />
                 <View className={styles.listContent}>
                   <View>
