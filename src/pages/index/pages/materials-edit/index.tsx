@@ -6,6 +6,7 @@ import { observer, inject } from '@tarojs/mobx'
 import InputWrap from '@/components/InputWrap'
 import { uploadFile } from '@/utils/upload'
 import { saveOrUpdate } from './api'
+import { navigateTo } from '@/utils/common'
 
 const styles = require('./index.module.scss')
 
@@ -78,8 +79,12 @@ class Index extends Component {
       sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'] // 可以指定来源是相册还是相机，默认二者都有
     })
-    console.log(result)
-    uploadFile()
+    const url = await uploadFile(result.tempFiles[0])
+    this.changeFromEvt('img', url)
+  }
+
+  handleClassSelect() {
+    navigateTo('/pages/index/pages/materials-class/index')
   }
 
   render() {
@@ -129,6 +134,7 @@ class Index extends Component {
                     type="text"
                     placeholder="请选择"
                     editable={false}
+                    onClick={this.handleClassSelect.bind(this)}
                     onChange={this.changeFromEvt.bind(this, 'mtId')}
                   />
                 </InputWrap>

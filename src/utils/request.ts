@@ -31,12 +31,26 @@ export default {
     const baseUrl = CONSTS.API_HOST
     const targetUrl = url.indexOf('http') === -1 ? baseUrl + url : url
     // log('发起GET请求')
-    return request(targetUrl, data, 'POST')
+    return request(targetUrl, data, 'GET')
   },
   post(url, data = {}) {
     const baseUrl = CONSTS.API_HOST
     const targetUrl = url.indexOf('http') === -1 ? baseUrl + url : url
     // log('发起POST请求')
     return request(targetUrl, data, 'POST')
+  },
+  getBlob(url) {
+    return new Promise(function(resolve, reject) {
+      var xhr = new XMLHttpRequest()
+      xhr.open('GET', url, true)
+      xhr.responseType = 'blob'
+      xhr.onload = function(e) {
+        if (this.status == 200) {
+          resolve(this.response)
+        }
+        reject(this.response)
+      }
+      xhr.send()
+    })
   }
 }
