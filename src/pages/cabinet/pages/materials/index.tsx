@@ -2,7 +2,7 @@ import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, ScrollView, Image } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
-
+import { apiGetWuziList, IWuzi } from './api'
 import { AtNavBar, AtButton } from 'taro-ui'
 
 const styles = require('./index.module.scss')
@@ -34,6 +34,7 @@ interface Index {
 
 interface IState {
   type: String
+  list: IWuzi[]
 }
 
 @inject('counterStore')
@@ -51,13 +52,15 @@ class Index extends Component {
   }
 
   state: IState = {
-    type: 'in'
+    type: 'in',
+    list: []
   }
 
   componentWillMount() {
     this.setState({
       type: this.$router.params.type
     })
+    this.loadWuziList()
   }
 
   componentWillReact() {
@@ -81,6 +84,25 @@ class Index extends Component {
     Taro.navigateTo({ url })
   }
 
+  async loadWuziList() {
+    const data = await apiGetWuziList(this.$router.params.fcid)
+    if (data.head.ret === 0) {
+      this.setState({
+        list: data.data
+      })
+    }
+  }
+
+  getCount(item: IWuzi) {
+    let count = 0
+    let { materialBatchs = [] } = item
+    count = materialBatchs.reduce((sum, i) => {
+      sum += i.count
+      return sum
+    }, 0)
+    return `剩余${count}个`
+  }
+
   render() {
     const { type } = this.state
 
@@ -100,16 +122,16 @@ class Index extends Component {
         <View className={styles.wrap}>
           <ScrollView className={[styles.container, 'scroll-container'].join(' ')} scrollY={true}>
             <View className={styles.content}>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map(i => {
+              {this.state.list.map(i => {
                 return (
-                  <View className={styles.listItem} key={i}>
-                    <Image mode="aspectFit" lazyLoad={true} className={styles.img} />
+                  <View className={styles.listItem} key={i.id}>
+                    <Image mode="aspectFit" lazyLoad={true} className={styles.img} src={i.img} />
                     <View className={styles.listContent}>
                       <View>
-                        <View className={styles.listTitle}>消防战斗服</View>
-                        <View className={styles.listDesc}>NA-02</View>
+                        <View className={styles.listTitle}>{i.name}</View>
+                        <View className={styles.listDesc}>{i.remark}</View>
                       </View>
-                      <View className={styles.address}>剩余12个</View>
+                      <View className={styles.address}>{this.getCount(i)}</View>
                       <AtButton className={styles.btn} type="secondary" onClick={this.handleBtnClick.bind(this)}>
                         {btn}
                       </AtButton>
@@ -119,6 +141,9 @@ class Index extends Component {
               })}
             </View>
           </ScrollView>
+          <AtButton className={styles.btn} type="secondary" onClick={this.handleBtnClick.bind(this)}>
+            {btn}
+          </AtButton>
         </View>
       </View>
     )

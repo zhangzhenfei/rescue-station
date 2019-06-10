@@ -133,7 +133,7 @@ class Index extends Component {
   }
 
   handleCabinetClick(item) {
-    Taro.navigateTo({ url: item.url })
+    Taro.navigateTo({ url: `${item.url}&fcid=${this.$router.params.id}` })
   }
 
   deviceStatus(detail: ICabinetDetail) {
